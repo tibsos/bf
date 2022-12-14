@@ -1,0 +1,13 @@
+/* line 3, static/scss/auth/login.scss */body,html{margin:0;width:100%;height:100%;color:#1E2330}/* line 13, static/scss/auth/login.scss */body{background:#fff}/* line 20, static/scss/auth/login.scss */.main{position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:center}/* line 31, static/scss/auth/login.scss */.main .wrapper{position:relative;height:500px;width:340px;background:#f6f6f6;border-radius:20px}/* line 42, static/scss/auth/login.scss */.main .wrapper .brand{position:relative;top:20px;width:100%;height:70px;display:flex;align-items:center;justify-content:center}/* line 56, static/scss/auth/login.scss */.main .wrapper .brand svg{fill:#1E2330;transform:scale(2)}/* line 65, static/scss/auth/login.scss */.main .wrapper h1{position:relative;top:40px;width:100%;text-align:center;font-weight:normal;font-size:25px;margin:0}/* line 80, static/scss/auth/login.scss */.main .wrapper form{position:relative;top:70px}/* line 85, static/scss/auth/login.scss */.main .wrapper form .fields{width:100%}/* line 89, static/scss/auth/login.scss */.main .wrapper form .fields input{position:relative;left:4%;width:80%;height:50px;margin-bottom:15px;padding:0 20px 0 20px;border-radius:50px;border:none;background:none;box-shadow:inset 1px 1px 8px #a0a0a0, inset -1px -1px 8px #ffffff;font-size:18px}/* line 111, static/scss/auth/login.scss */.main .wrapper form .fields input:focus{outline:none}/* line 119, static/scss/auth/login.scss */.main .wrapper form a{position:relative;top:5px;left:10%;text-decoration:none;color:#1E2330}/* line 130, static/scss/auth/login.scss */.main .wrapper form a:hover{color:red}/* line 136, static/scss/auth/login.scss */.main .wrapper form .btns{position:relative;top:40px}/* line 141, static/scss/auth/login.scss */.main .wrapper form .btns a{position:relative;left:0}/* line 148, static/scss/auth/login.scss */.main .wrapper form .btns button{position:relative;left:5%;width:90%;height:50px;margin-bottom:20px;background:none;box-shadow:1px 1px 10px #a0a0a0, -1px -1px 10px #ffffff;font-size:18px}/* line 179, static/scss/auth/login.scss */:root{--gradient-shadow: linear-gradient(
+		45deg,
+		#fb0094,
+		#0000ff,
+		#00ff00,
+		#ffff00,
+		#ff0000,
+		#fb0094,
+		#0000ff,
+		#00ff00,
+		#ffff00,
+		#ff0000
+	)}/* line 195, static/scss/auth/login.scss */.wrapper:before,.wrapper:after{content:"";position:absolute;top:-2px;left:-2px;background:var(--gradient-shadow);background-size:400%;width:calc(100% + 4px);height:calc(100% + 4px);z-index:-1;animation:animate 20s linear infinite;border-radius:20px}/* line 213, static/scss/auth/login.scss */.wrapper:after{filter:blur(100px)}@keyframes animate{0%{background-position:0 0}50%{background-position:300% 0}100%{background-position:0 0}}

@@ -1,0 +1,71 @@
+{% load static %}
+{% load compress %}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>
+            
+            Мой блокнотик
+
+        </title>
+
+        {% compress css %}
+        
+            <link rel="stylesheet" href="{% static 'scss/home.scss' %}" type="text/x-scss">
+
+        {% endcompress %}
+
+        <script src="{% static 'packages/jquery-3.6.1.min.js' %}"></script>
+        <script src="{% static 'packages/htmx.min.js' %}"></script>
+
+    </head>
+
+    <body>
+        
+        <div class="top-nav">
+
+            <div class="toggle-nav">
+
+                -
+
+            </div>
+
+            <div class="brand">
+
+
+
+            </div>
+
+            <div class="search">
+
+
+
+            </div>
+
+            <div class="profile">
+
+
+
+            </div>
+
+        </div>
+
+
+    </body>
+
+    <script>
+
+        
+
+    </script>
+
+</html>

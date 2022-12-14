@@ -1,0 +1,128 @@
+{% load static %}
+{% load compress %}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>
+            
+            Бесплатный, но стильный онлайн блокнот для записи заметок
+
+        </title>
+
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+
+        {% compress css %}
+
+            <link rel="stylesheet" href="{% static 'scss/auth/login.scss' %}" type="text/x-scss">
+
+        {% endcompress %}
+
+        <script src="{% static 'packages/jquery-3.6.1.min.js' %}"></script>
+
+    </head>
+
+    <body>
+        
+        <div class="main">
+
+            <div class="wrapper register">
+
+                <div class="brand">
+    
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19.394" height="28.21" viewBox="0 0 19.394 28.21">
+                        <path id="Icon_awesome-lightbulb" data-name="Icon awesome-lightbulb" d="M5.293,25.033a1.764,1.764,0,0,0,.3.975l.942,1.415A1.763,1.763,0,0,0,8,28.21h3.4a1.763,1.763,0,0,0,1.468-.787l.942-1.415a1.762,1.762,0,0,0,.3-.975l0-2.113H5.29l0,2.113ZM0,9.7a9.643,9.643,0,0,0,2.4,6.379,15.834,15.834,0,0,1,2.877,5.039c0,.014.006.043.006.043h8.829c0-.014,0-.028.006-.043a15.834,15.834,0,0,1,2.877-5.039A9.7,9.7,0,1,0,0,9.7ZM9.7,5.289A4.413,4.413,0,0,0,5.289,9.7a.882.882,0,0,1-1.763,0A6.178,6.178,0,0,1,9.7,3.526a.882.882,0,0,1,0,1.763Z" transform="translate(0 0)"/>
+                    </svg>
+    
+                </div>
+    
+                <h1>Войти в Блокнотик</h1>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+    
+                    <div class="fields">
+    
+                        <input type="text" name="n" placeholder="Ваше имя">
+                        <input type="text" name="u" placeholder="Электронная почта">
+                        <input type="text" name="p" placeholder="Пароль">
+    
+                    </div>
+    
+                    <div class="btns register">
+
+                        <button type="submit">Зарегистрироваться</button>
+
+                        <a href="{% url 'user:login' %}">
+
+                            <button type="button">У меня есть аккаунт</button>
+
+                        </a>
+
+                    </div>
+    
+                </form>
+    
+            </div>
+
+        </div>
+
+
+    </body>
+
+    <style>
+
+        @font-face {
+            font-family: Comfortaa;
+            src: url("{% static 'fonts/Comfortaa.ttf' %}");
+        }
+
+        body {
+
+            font-family: Comfortaa;
+
+        }
+
+        button {
+
+            font-family: Comfortaa;
+            cursor: pointer;
+            border: none;
+            border-radius: 100px;
+
+        }
+
+        input {
+
+            font-family: Comfortaa;
+
+        }
+
+        
+
+    </style>
+
+    <script>
+
+        /* Name > 1 symbol */
+
+        /* Email verification */
+
+        
+        /* Password verification */
+
+        /* Unlock button if all good */
+
+    </script>
+
+</html>
