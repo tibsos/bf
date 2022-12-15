@@ -59,12 +59,80 @@
 
         </div>
 
+        <div class="new-note">
+
+            <div class="wrapper">
+
+                <input type="text" name="t" class='title' id="nnt" placeholder="Я помню чудное мгновение...">
+
+                <div class="extended">
+
+                    <div class="rte">
+
+
+
+                    </div>
+
+                    <div class="content">
+
+
+                    </div>
+
+                    <button></button>
+
+                </div>
+
+            </div>
+
+        </div>
+
 
     </body>
 
+    <style>
+
+        @font-face {
+            font-family: Comfortaa;
+            src: url("{% static 'fonts/Comfortaa.ttf' %}");
+        }
+
+        body {
+
+            font-family: Comfortaa;
+
+        }
+
+        button {
+
+            font-family: Comfortaa;
+            cursor: pointer;
+            border: none;
+            border-radius: 100px;
+
+        }
+
+        input {
+
+            font-family: Comfortaa;
+            font-size: 17px;
+
+        }
+
+        input:focus {
+
+            outline: none;
+
+        }
+
+    </style>
+
     <script>
 
-        
+        $('#nnt').focus(function() {
+
+            $('.new-note').addClass('open');
+
+        });
 
     </script>
 

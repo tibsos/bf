@@ -1,0 +1,73 @@
+body {
+
+    margin: 0;
+
+    background: #f6eadf;
+
+}
+
+.new-note {
+
+    position: relative;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    .wrapper {
+
+        width: 500px;
+        height: 60px;
+
+        border-radius: 30px;
+
+        box-shadow: 3px 3px 7px #ccc2b9,
+            -3px -3px 7px #ffffff;
+
+        .title {
+
+            position: relative;
+            top: 5px;
+            left: 5px;
+
+            width: 450px;
+            height: 50px;
+
+            padding: 0 20px 0 20px;
+
+            border-radius: 100px;
+            border: none;
+
+            background: none;
+
+            box-shadow: inset 3px 3px 7px #ccc2b9,
+                inset -3px -3px 7px #ffffff;
+
+        }
+
+    }
+
+    .extended {
+
+        display: none;
+
+    }
+
+}
+
+.new-note.open {
+
+    .wrapper {
+
+        height: 300px;
+
+        .extended {
+
+            display: block;
+
+        }
+
+    }
+
+}

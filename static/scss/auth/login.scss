@@ -58,6 +58,8 @@ body {
                 fill: $text-color;
                 transform: scale(2);
 
+                cursor: pointer;
+
             }
 
         }
@@ -178,7 +180,7 @@ body {
 
     .btns.register {
 
-        top: 30px;
+        top: 15px;
 
     }
 
