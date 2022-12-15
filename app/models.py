@@ -48,8 +48,8 @@ class Note(m.Model):
     uid = m.UUIDField(default = u4)
     user = m.ForeignKey(User, on_delete = m.CASCADE)
 
-    title = m.TextField()
-    content = m.TextField()
+    title = m.TextField(blank = True)
+    content = m.TextField(blank = True)
     
     images = m.ManyToManyField(Image, blank = True, related_name = 'ni')
     folders = m.ManyToManyField(Folder, blank = True)
@@ -58,7 +58,7 @@ class Note(m.Model):
     loved = m.BooleanField(default = False)
     
     deleted = m.BooleanField(default = False)
-    deleted_at = m.DateTimeField(blank = True)
+    deleted_at = m.DateTimeField(null = True)
 
     created_at = m.DateTimeField(auto_now_add = True)
     updated_at = m.DateTimeField(auto_now = True)

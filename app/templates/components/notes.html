@@ -1,0 +1,38 @@
+
+
+<!-- Pinned -->
+
+{% if other_notes %}
+
+    <span class="section-title">Другие заметки</span>
+    
+    <div class="note-section">
+
+
+        {% for note in other_notes %}
+
+            <div class="note">
+
+                <div class="content">
+
+                    <span class="title">{{ note.title }}</span>
+                    <span class="content">{{ note.content | safe }}</span>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+
+    </div>
+
+    
+
+{% endif %}
+
+<!-- Not pinned -->
+
+
+
+<!-- Archived, loved, pinned($("#source").prependTo("#destination");), delete - AJAX -->

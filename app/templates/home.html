@@ -30,6 +30,23 @@
     </head>
 
     <body>
+
+        <div class="create-folder">
+
+            <div class="wrapper">
+
+                <span>Новый блокнотик</span>
+
+                <form>
+
+                    <input type="text" name="t" placeholder="Заголовок">
+                    <button hx-post="{% url 'app:create-folder' %}" target=".folders">Создать</button>
+
+                </form>
+
+            </div>
+
+        </div>
         
         <div class="top-nav">
 
@@ -59,33 +76,104 @@
 
         </div>
 
-        <div class="new-note">
+        <div class="side-nav">
 
-            <div class="wrapper">
+            <div class="page in">H</div>
+            <div class="page">L</div>
 
-                <input type="text" name="t" class='title' id="nnt" placeholder="Я помню чудное мгновение...">
+            {% include 'components/folders.html' %}
 
-                <div class="extended">
+            <div class="page">+</div>
 
-                    <div class="rte">
-
-
-
-                    </div>
-
-                    <div class="content">
-
-
-                    </div>
-
-                    <button></button>
-
-                </div>
-
-            </div>
+            <div class="page">A</div>
+            <div class="page">T</div>
 
         </div>
 
+        <div class="new-note">
+
+              <form> 
+
+                <input type="text" name="cf" id='nnf' hidden />
+
+                <input type="checkbox" name="p" id='nnp' hidden />
+                <input type="checkbox" name="l" id='nnl' hidden />
+
+            
+                <div class="wrapper">
+                
+
+                    <div class="top">
+
+                        <div class="left">
+
+                            <div id="pin">P</div>
+                            <div id="love">L</div>
+
+
+                        </div>
+
+                        <input type="text" name="t" class='title' id="nnt" placeholder="Я помню чудное мгновение...">
+                        
+                        <div class="right">
+
+                            <div>X</div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="extended">
+
+                        <div class="rte">
+
+                            <button type="button" id="bold"><b>Ж</b></button>
+                            <button type="button" id="italic"><i>К</i></button>
+                            <button type="button" id="underline"><u>С</u></button>
+                            <button type="button" id="strike"><s>О</s></button>
+                            
+                            <button type="button" id="ul">UL</button>
+                            <button type="button" id="ol">OL</button>
+                            <button type="button" id="cl">CL</button>
+                            
+                            <button type="button" id="image">I</button>
+                            <button type="button" id="folders">F</button>
+        
+                            <button type="button" id="erase">E</button>
+
+                        </div>
+
+                        <div class="content">
+
+                            <input type="text" name="c" id="nnc" hidden />
+                            <div contenteditable="true" class="new-note-content"></div>
+
+                        </div>
+
+                        
+                        <button class="create-note-btn" hx-post="{% url 'app:create-note' %}" hx-target=".notes">Создать</button>
+                        
+                    </div>
+                
+                </div>
+
+            </form>
+            
+        </div>
+
+        <div class="notes">
+
+            {% include 'components/notes.html' %}
+
+        </div>
+
+        <div class="current-note">
+
+
+        </div>
+
+        
 
     </body>
 
@@ -128,9 +216,154 @@
 
     <script>
 
-        $('#nnt').focus(function() {
+        /* Sidenav */
 
+        $('.toggle-nav').click(function() {
+
+            $(this).toggleClass('in');
+
+        });
+
+        /* New note */
+        
+        $('#nnt').focus(function() {
+            
             $('.new-note').addClass('open');
+
+
+            $('.extended').animate({opacity: 1}, 750);
+            
+        });
+
+        $('#pin').click(function() {
+
+            $(this).toggleClass('in');
+            $('#nnp').prop('checked', !$('#nnp').prop('checked'));
+
+        });
+
+        $('#love').click(function() {
+
+            $(this).toggleClass('in');
+            $('#nnl').prop('checked', !$('#nnl').prop('checked'));
+
+        });
+
+        $('.new-note-content').keyup(function() {
+
+            $('#nnc').val($('.new-note-content').html());
+
+        });
+        
+        /* RTE */
+
+        $('#bold').click(function() {
+
+            document.execCommand('bold');
+            $(this).toggleClass('active');
+            $('.new-note-content').focus();
+
+        });
+
+        $('#italic').click(function() {
+
+            document.execCommand('italic');
+            $(this).toggleClass('active');
+            $('.new-note-content').focus();
+
+        });
+
+        $('#underline').click(function() {
+
+            document.execCommand('underline');
+            $(this).toggleClass('active');
+            $('.new-note-content').focus();
+
+        });
+
+        $('#strike').click(function() {
+
+            document.execCommand('strikeThrough');
+            $(this).toggleClass('active');
+            $('.new-note-content').focus();
+
+        });
+
+        $('#ul').click(function() {
+
+            document.execCommand('insertUnorderedList');
+            $(this).toggleClass('active');
+            $('.new-note-content').focus();
+
+        });
+
+        $('#ol').click(function() {
+
+            document.execCommand('insertOrderedList');
+            $(this).toggleClass('active');
+            $('.new-note-content').focus();
+
+        });
+
+        /* Checklist */
+
+        let checkListHTML = `
+
+            <ul>
+
+                <li class='checkbox-item'>
+
+                    <input type="checkbox">
+
+                </li>
+
+            </ul>
+
+        `;
+
+        $('#cl').click(function() {           
+
+        range = window.getSelection().getRangeAt(0);
+        parentEl = range.commonAncestorContainer.parentNode;
+
+        if (parentEl.className !== 'checkbox-item' && parentEl.tagName === 'LI') {
+
+            document.execCommand('insertHTML', false, "<input type='checkbox' />");
+            $('.new-note-content').focus();
+
+        } else {
+
+            document.execCommand('insertHTML', false, checkListHTML);
+            $('.new-note-content').focus();
+
+        }
+
+        });
+
+        $(".new-note-content").on('keydown', function(e) {
+
+        range = window.getSelection().getRangeAt(0);
+        parentEl = range.commonAncestorContainer.parentNode;
+
+        if (parentEl.className === 'checkbox-item') {
+
+            if (e.keyCode === 13) {
+                
+                setTimeout(function () {
+
+                    document.execCommand('insertHTML', false, "<input type='checkbox' />");
+
+                }, 1)
+
+            }
+
+        }
+
+        });
+
+        document.body.addEventListener('htmx:configRequest', (event) => {
+
+            event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
 
         });
 

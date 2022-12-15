@@ -12,7 +12,8 @@ urlpatterns = [
 
 ajax_urlpatterns = [
 
-
+    path('create-note', create_note, name = 'create-note'),
+    path('create-folder', create_folder, name = 'create-folder'),
 
 ]
 
