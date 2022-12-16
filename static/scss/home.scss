@@ -192,6 +192,12 @@ body {
 
                 }
 
+                .in {
+
+                    box-shadow: inset 3px 3px 7px #ccc2b9,
+                        inset -3px -3px 7px #ffffff;
+                }
+
             }
 
             .right {
@@ -282,6 +288,12 @@ body {
                     -3px -3px 7px #ffffff;
 
             }
+
+        }
+
+        .new-note-folders {
+
+            z-index: 5;
 
         }
 
@@ -717,5 +729,13 @@ body {
 
 
     }
+
+}
+
+.new-note-folders {
+
+    position: absolute;
+
+    left: 500px;
 
 }

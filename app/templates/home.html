@@ -133,14 +133,12 @@
             
                 <div class="wrapper">
                 
-
                     <div class="top">
 
                         <div class="left">
 
                             <div id="pin">P</div>
                             <div id="love">L</div>
-
 
                         </div>
 
@@ -172,6 +170,31 @@
                             <button type="button" id="folders">F</button>
         
                             <button type="button" id="erase">E</button>
+
+                        </div>
+
+                        <input type="text" name="fu" id="folder-uids" hidden/>
+                        <input type="text" name="ft" id="folder-titles" />
+
+                        <div class="new-note-folder-list">
+
+
+
+                        </div>
+
+                        <div class="new-note-folders">
+
+                            <span>Добавить заметку в блокнотик</span>
+                            
+                            <input type="text" name="t" id="search-notepad" placeholder="Название блокнотика">
+
+                            <div class="folder-list">
+
+
+
+                            </div>
+
+                            <button id="create-folder-from-search-btn" hx-post="{% url 'app:create-folder' %}" hx-target=".folders" style="display: none;">Создать</button>
 
                         </div>
 
@@ -248,6 +271,173 @@
     <script>
 
         /* Folders */
+
+        var folderTitles = [];
+
+        $('#create-folder-from-search-btn').click(function() {
+
+            title = $('#search-notepad').val()
+            
+            /* Search for this title within folders every 5ms interval  */
+            /* Break out once found */
+            /* Append it to folder list */
+
+        })
+
+        var folders, folderList;
+
+        $('#folders').click(function() {
+
+            /* Get all folders  */
+
+            folders = $('.folders').children();
+            
+            folders.each(function(i) {
+
+                uid = $(this).children('#uid').val();
+                title = $(this).children('.folder-title').text();
+
+                $('.folder-list').append(
+
+                    `
+
+                        <div id='new-note-folder'>
+
+                            <input type='text' value='` + uid + `' hidden />
+                            <input type='checkbox' id='new-note-folder-check' onChange="addFolder(this)" />
+                            <span>` + title + ` </span>
+
+                        </div>
+
+                    `
+
+                )
+
+            });
+
+        });
+
+        var newNoteFolders = [];
+
+        function addFolder(e) {
+
+            uid = e.previousElementSibling.value;
+
+            title = e.nextElementSibling.textContent;
+
+            if (e.checked) {
+
+                /* Input uid to folder list */
+                /* Add a box to folder list */
+
+                $('.new-note-folder-list').append(
+
+                    `<div><span>` + title + `</span></div>`
+                    
+                )
+
+                newNoteFolders.push(uid);
+
+                folderList = newNoteFolders.join(' ')
+
+                $('#folder-uids').val(folderList);
+
+            } else {
+
+                /* Find element */
+
+                folders = $('.new-note-folder-list').children('div').children('span');
+
+                folders.each(function() {
+
+                    if ($(this).text() == title) {
+
+                        $(this).parent('div').remove();
+
+                    }
+
+                })
+
+                newNoteFolders.pop(uid);
+
+                $('#folder-uids').val(newNoteFolders.join(' '));
+
+            }
+
+        }
+
+        $('#search-notepad').keyup(function() {
+
+            folders = $('.folder-list').children();
+
+            folders.each(function() {
+
+                if (!$(this).children('input').is(':checked')) {$(this).remove()}
+
+            })
+
+            $('.folder-list').children();
+
+            query = $(this).val();
+
+            folders = $('.folders').children();
+
+            folderExists = false;
+            
+            folders.each(function(i) {
+
+                title = $(this).children('.folder-title').text();
+
+                if (title === query) {
+
+                    folderExists = true;
+
+                }
+
+                /* If folder not in checked folders */
+
+                if (title.search(query) >= 0) {
+
+                    $('.folder-list').append(
+
+                        `
+
+                            <div>
+
+                                <input type='checkbox' />
+                                <span>` + title + ` </span>
+
+                            </div>
+
+                        `
+
+                    )
+
+                }
+
+            });
+
+            if (query !== '') {
+
+                if (!folderExists) {
+
+                    $('#create-folder-from-search-btn').text("Создать '" + query + "'")
+                    $('#create-folder-from-search-btn').css('display', 'block');
+
+                } else {
+
+                    $('#create-folder-from-search-btn').css('display', 'none');
+
+                }
+
+            } else {
+
+                $('#create-folder-from-search-btn').css('display', 'none');
+
+            }
+
+
+        });
 
         /* Edit folder */
 
