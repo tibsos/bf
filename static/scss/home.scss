@@ -59,6 +59,11 @@ body {
 
 }
 
+.side-nav:hover {
+
+    overflow-y: scroll;
+
+}
 
 .side-nav {
 
@@ -66,14 +71,21 @@ body {
     top: 120px;
     left: calc(1.5% + 10px);
 
-    width: 50px;
+    width: 70px;
+    height: calc(100% - 120px);
+
+    overflow: hidden;
+
+    transition: all 0.75s ease-in-out;
+
+    z-index: 2;
 
     .page {
 
         width: 45px;
         height: 45px;
 
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         
         border-radius: 50px;
 
@@ -81,6 +93,36 @@ body {
             -3px -3px 7px #ffffff;
 
         cursor: pointer;
+
+        transition: all 0.75s ease-in-out;
+
+    }
+
+    .edit-folder-init {
+
+        position: relative;
+        top: 5px;
+        left: 210px;
+
+        width: 35px;
+        height: 35px;
+
+        border-radius: 50px;
+
+        box-shadow: 3px 3px 7px #ccc2b9,
+            -3px -3px 7px #ffffff;
+
+    }
+
+}
+
+.side-nav.open {
+
+    width: 280px;
+
+    .page {
+
+        width: 250px;
 
     }
 
@@ -95,6 +137,10 @@ body {
 
     display: flex;
     justify-content: center;
+
+    transition: margin 0.75s ease-in-out;
+
+    z-index: 1;
 
     .wrapper {
 
@@ -357,9 +403,14 @@ body {
 
     margin-right: 30px;
 
+    transition: margin 0.75s ease-in-out;
+
+
     .section-title {
 
         font-size: 40px;
+
+        margin-left: 30px;
 
     }
 
@@ -417,7 +468,9 @@ body {
 
 }
 
-.create-folder {
+/* Folders */
+
+.create-folder-form {
 
     position: absolute;
     left: 0;
@@ -426,24 +479,55 @@ body {
     width: 100%;
     height: 100%;
 
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.7);
 
-    z-index: 10;
+    z-index: -1;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
+    opacity: 0;
+
     .wrapper {
+
+        position: relative;
 
         width: 400px;
         height: 100px;
 
         padding: 25px;
 
-        border-radius: 50px;
+        border-radius: 30px;
         
         background: #f6eadf;
+
+        .close-nn-form {
+
+            position: absolute;
+
+            right: 10px;
+            top: 10px;
+
+            width: 45px;
+            height: 45px;
+
+            border-radius: 50px;
+
+            box-shadow: 3px 3px 7px #ccc2b9,
+                -3px -3px 7px #ffffff;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+            font-weight: bold;
+
+        }
 
         span {
 
@@ -461,7 +545,7 @@ body {
 
             input {
 
-                height: 35px;
+                height: 40px;
 
                 background: none;
 
@@ -470,7 +554,7 @@ body {
 
                 margin-right: 10px;
 
-                padding: 0 15px 0 15px;
+                padding: 0 20px 0 20px;
 
                 box-shadow: inset 3px 3px 7px #ccc2b9,
                     inset -3px -3px 7px #ffffff;
@@ -494,6 +578,143 @@ body {
             }
 
         }
+
+    }
+
+}
+
+
+.edit-folder-form {
+
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.7);
+
+    z-index: -1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+
+    .wrapper {
+
+        position: relative;
+
+        width: 400px;
+        height: 140px;
+
+        padding: 25px;
+
+        border-radius: 30px;
+        
+        background: #f6eadf;
+
+        .close-en-form {
+
+            position: absolute;
+
+            right: 10px;
+            top: 10px;
+
+            width: 45px;
+            height: 45px;
+
+            border-radius: 50px;
+
+            box-shadow: 3px 3px 7px #ccc2b9,
+                -3px -3px 7px #ffffff;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+            font-weight: bold;
+
+        }
+
+        span {
+
+            font-size: 30px;
+
+        }
+
+        form {
+
+            position: relative;
+            top: 20px;
+
+            display: flex;
+            align-content: center;
+
+            input {
+
+                height: 40px;
+
+                background: none;
+
+                border: none;
+                border-radius: 50px;
+
+                margin-right: 10px;
+
+                padding: 0 20px 0 20px;
+
+                box-shadow: inset 3px 3px 7px #ccc2b9,
+                    inset -3px -3px 7px #ffffff;
+
+                float: left;
+                
+    
+            }
+    
+            button {
+    
+                padding: 10px;
+                width: 130px;
+                
+                float: right;
+                background: none;
+
+                box-shadow: 3px 3px 7px #ccc2b9,
+                    -3px -3px 7px #ffffff;
+    
+            }
+
+            button:disabled {
+
+                cursor: not-allowed;
+
+            }
+
+            .delete-folder-btn {
+
+                position: absolute;
+                top: 57.5px;
+                left: 95px;
+    
+                width: 200px;
+                height: 40px;
+    
+                background: none;
+    
+                box-shadow: 3px 3px 7px #ccc2b9,
+                        -3px -3px 7px #ffffff;
+    
+            }
+
+        }
+
 
     }
 

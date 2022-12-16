@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 
 from django.contrib.auth.decorators import login_required as lr
 
@@ -81,5 +81,21 @@ def create_folder(request):
         title = request.POST.get('t'),
 
     )
+
+    return render(request, 'components/folders.html', {'folders': Folder.objects.filter(user = request.user)})
+
+@lr
+def edit_folder(request):
+
+    folder = Folder.objects.get(uid = request.POST.get('u'))
+    folder.title = request.POST.get('t')
+    folder.save()
+
+    return HttpResponse('K')
+
+@lr
+def delete_folder(request):
+
+    Folder.objects.get(uid = request.POST.get('u')).delete()
 
     return render(request, 'components/folders.html', {'folders': Folder.objects.filter(user = request.user)})

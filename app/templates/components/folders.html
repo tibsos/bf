@@ -3,8 +3,30 @@
     <div class="page">
 
         <!-- SVG -->
-        <span>{{ folder.title }}</span>
+        <input type="text" id="uid" value="{{ folder.uid }}" hidden>
+        <span class="folder-title">{{ folder.title }}</span>
+
+        <div class="edit-folder-init">E</div>
 
     </div>
 
 {% endfor %}
+
+
+<script>
+
+    var folderTitle;
+
+    $('.edit-folder-init').click(function() {
+
+        $('.edit-folder-form').css('z-index', 10);
+        $('.edit-folder-form').animate({opacity: 1}, 500);
+
+        folderTitle = $(this).siblings('.folder-title').html();
+        $('#edit-folder-title').val(folderTitle);
+
+        $('#folder-uid').val($(this).siblings('#uid').val());
+
+    });
+
+</script>

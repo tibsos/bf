@@ -31,18 +31,44 @@
 
     <body>
 
-        <div class="create-folder">
+        <div class="create-folder-form">
 
             <div class="wrapper">
+
+                <div class="close-nn-form">X</div>
 
                 <span>Новый блокнотик</span>
 
                 <form>
 
                     <input type="text" name="t" placeholder="Заголовок">
-                    <button hx-post="{% url 'app:create-folder' %}" target=".folders">Создать</button>
+                    <button id='create-folder-btn' hx-post="{% url 'app:create-folder' %}" hx-target=".folders">Создать</button>
 
                 </form>
+
+            </div>
+
+        </div>
+
+        <div class="edit-folder-form">
+
+            <div class="wrapper">
+
+                <div class="close-en-form">X</div>
+
+                <span>Изменить блокнотик</span>
+
+                <form>
+
+                    <input type="text" name="u" id="folder-uid" hidden />
+
+                    <input type="text" name="t" placeholder="Заголовок" id="edit-folder-title">
+                    <button id='edit-folder-btn' type="button">Сохранить</button>
+
+                    <button class="delete-folder-btn" hx-post="{% url 'app:delete-folder' %}" hx-target=".folders">У</button>
+                
+                </form>
+
 
             </div>
 
@@ -81,9 +107,14 @@
             <div class="page in">H</div>
             <div class="page">L</div>
 
-            {% include 'components/folders.html' %}
+            <div class="folders">
 
-            <div class="page">+</div>
+                {% include 'components/folders.html' %}
+
+            </div>
+
+
+            <div class="page" id="create-folder-init">+</div>
 
             <div class="page">A</div>
             <div class="page">T</div>
@@ -216,11 +247,146 @@
 
     <script>
 
+        /* Folders */
+
+        /* Edit folder */
+
+        $('#edit-folder-title').keyup(function() {
+
+            title = $(this).val();
+
+            if (title === '') {
+
+                $('#edit-folder-btn').prop('disabled', true);
+
+            } else {
+
+                $('#edit-folder-btn').prop('disabled', false);
+
+            }
+
+        });
+
+        $('#edit-folder-btn').click(function() {
+
+            title = $('#edit-folder-title').val();
+
+            if (folderTitle != title) {
+
+                uid = $('#folder-uid').val();
+
+                $('input[value='+ uid + ']').siblings('.folder-title').text(title);
+
+                $.ajax({
+
+                    type: 'POST',
+                    
+                    url: "{% url 'app:edit-folder' %}",
+
+                    data: {
+
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'u': uid,
+                        't': title,
+
+                    },
+                    
+                })
+
+            } 
+
+        })
+
+        $('#edit-folder-btn, .close-en-form, .delete-folder-btn').click(function() {
+
+            $('.edit-folder-form').animate({opacity: 0}, 500);
+
+            setTimeout(function() {
+
+                $('.edit-folder-form').css('z-index', -1); 
+
+            }, 500)
+
+        });
+
+        
+
+        /* Create folder */
+
+        $('#create-folder-init').click(function() {
+
+            $('.create-folder-form').css('z-index', 10);
+            $('.create-folder-form').animate({opacity: 1}, 500);
+
+        });
+
+        $('#create-folder-btn, .close-nn-form').click(function() {
+
+            $('.create-folder-form').animate({opacity: 0}, 500);
+
+            setTimeout(function() {
+
+                $('.create-folder-form').css('z-index', -1); 
+
+            }, 500)
+
+        });
+
         /* Sidenav */
+
+        var sidenavOpen = false;
+        
+        function toggleSidenav() {
+
+            if (sidenavOpen) {
+
+                $('.side-nav').removeClass('open');
+                $('.new-note').css('marginLeft', 0);
+                $('.notes').css('marginLeft', 0);
+
+                sidenavOpen = false;
+
+            } else {
+
+                $('.side-nav').addClass('open');
+                $('.new-note').css('marginLeft', 110);
+                $('.notes').css('marginLeft', 200);
+
+                sidenavOpen = true;
+
+            }
+
+        };
+
+        $('.side-nav').mouseenter(function() {
+
+            if (!sidenavOpen) {
+
+                $('.side-nav').addClass('open');
+                $('.new-note').css('marginLeft', 110);
+                $('.notes').css('marginLeft', 200);
+
+            }
+
+        });
+
+        $('.side-nav').mouseleave(function() {
+
+            if (!sidenavOpen) {
+
+                $('.side-nav').removeClass('open');
+                $('.new-note').css('marginLeft', 0);
+                $('.notes').css('marginLeft', 0);
+
+            }
+
+        });
 
         $('.toggle-nav').click(function() {
 
             $(this).toggleClass('in');
+
+            toggleSidenav();
 
         });
 
@@ -229,7 +395,6 @@
         $('#nnt').focus(function() {
             
             $('.new-note').addClass('open');
-
 
             $('.extended').animate({opacity: 1}, 750);
             
