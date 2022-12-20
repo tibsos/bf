@@ -2,6 +2,9 @@ from django.shortcuts import render, HttpResponse
 
 from django.contrib.auth.decorators import login_required as lr
 
+from datetime import datetime as dt
+from datetime import timezone
+
 from .models import *
 
 @lr
@@ -19,9 +22,34 @@ def home(request):
     c['pinned_notes'] = pinned_notes
     c['other_notes'] = other_notes
 
+    c['section'] = 'Дом'
+
+    c['profile'] = request.user.p
+
 
     return render(request, 'home.html', c)
 
+@lr
+def trash(request):
+
+    c = {}
+
+    notes = list(Note.objects.filter(user = request.user).filter(deleted = True))
+
+    for note in notes:
+
+        difference = dt.now(timezone.utc) - note.deleted_at
+
+        if difference.total_seconds() > 604800:
+
+            notes.remove(note)
+            note.delete()
+
+    c['notes'] = notes
+
+    c['trash'] = True 
+
+    return render(request, 'components/notes.html', c)
 
 @lr
 def create_note(request):
@@ -73,6 +101,15 @@ def create_note(request):
     return render(request, 'components/notes.html', c)
 
 @lr
+def delete_note(request):
+
+    note = Note.objects.get(uid = request.POST.get('u'))
+    note.deleted = not note.deleted
+    note.save()
+
+    return HttpResponse('K')
+
+@lr
 def create_folder(request):
 
     Folder.objects.create(
@@ -99,3 +136,11 @@ def delete_folder(request):
     Folder.objects.get(uid = request.POST.get('u')).delete()
 
     return render(request, 'components/folders.html', {'folders': Folder.objects.filter(user = request.user)})
+
+
+@lr
+def delete_deleted_notes(request):
+
+    Note.objects.filter(user = request.user).filter(deleted = True).delete()
+
+    return render(request, 'components/notes.html', {'notes': None, 'trash': True})

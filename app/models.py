@@ -58,7 +58,7 @@ class Note(m.Model):
     loved = m.BooleanField(default = False)
     
     deleted = m.BooleanField(default = False)
-    deleted_at = m.DateTimeField(null = True)
+    deleted_at = m.DateTimeField(blank = True, null = True)
 
     created_at = m.DateTimeField(auto_now_add = True)
     updated_at = m.DateTimeField(auto_now = True)
@@ -72,3 +72,7 @@ class Note(m.Model):
         else:
 
             return f"{self.user.username} Note"
+
+    class Meta:
+
+        ordering = ['-updated_at']

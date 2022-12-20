@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import *
 
-app_name = 'app'
+app_name = 'a'
 
 urlpatterns = [
 
@@ -12,15 +12,24 @@ urlpatterns = [
 
 ajax_urlpatterns = [
 
-    path('create-note/', create_note, name = 'create-note'),
-    path('create-folder/', create_folder, name = 'create-folder'),
+    
+    path('delete-note/', delete_note, name = 'delete-note'),
 
+    
     path('edit-folder/', edit_folder, name = 'edit-folder'),
 
 ]
 
 htmx_urlpatterns = [
 
+    #path('create-note-'),
+    path('create-note/', create_note, name = 'create-note'),
+
+    path('trash', trash, name = 'trash'),
+
+    path('delete-deleted-notes/', delete_deleted_notes, name = 'delete-deleted-notes'),
+
+    path('create-folder/', create_folder, name = 'create-folder'),
     path('delete-folder/', delete_folder, name = 'delete-folder'),
 
 ]

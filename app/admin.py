@@ -1,3 +1,6 @@
-from django.contrib import admin
+from django.contrib import admin as a
+from .models import *
 
-# Register your models here.
+a.site.register(Folder)
+a.site.register(Note)
+a.site.register(Image)

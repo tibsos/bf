@@ -11,6 +11,9 @@ class Profile(m.Model):
     user = m.OneToOneField(User, on_delete = m.CASCADE, related_name = 'p')
 
     name = m.TextField()
+    initials = m.CharField(max_length = 3)
+
+    dark = m.BooleanField(default = False)
 
     premium = m.BooleanField(default = False)
 

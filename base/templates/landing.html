@@ -61,7 +61,7 @@
 
                         {% if u %}
 
-                            <a href="">
+                            <a href="{% url 'a:home' %}">
 
                                 <div>
 
@@ -75,7 +75,7 @@
 
                             </a>
 
-                            <a href="">
+                            <a href="{% url 'u:logout' %}">
 
                                 <div>
 
@@ -91,7 +91,7 @@
 
                         {% else %}
 
-                            <a href="">
+                            <a href="{% url 'u:login' %}">
 
                                 <div>
 

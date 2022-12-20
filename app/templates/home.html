@@ -9,7 +9,6 @@
 
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <title>
@@ -26,6 +25,7 @@
 
         <script src="{% static 'packages/jquery-3.6.1.min.js' %}"></script>
         <script src="{% static 'packages/htmx.min.js' %}"></script>
+        <script src="{% static 'packages/iconify.min.js' %}"></script>
 
     </head>
 
@@ -42,7 +42,7 @@
                 <form>
 
                     <input type="text" name="t" placeholder="Заголовок">
-                    <button id='create-folder-btn' hx-post="{% url 'app:create-folder' %}" hx-target=".folders">Создать</button>
+                    <button id='create-folder-btn' hx-post="{% url 'a:create-folder' %}" hx-target=".folders">Создать</button>
 
                 </form>
 
@@ -65,7 +65,7 @@
                     <input type="text" name="t" placeholder="Заголовок" id="edit-folder-title">
                     <button id='edit-folder-btn' type="button">Сохранить</button>
 
-                    <button class="delete-folder-btn" hx-post="{% url 'app:delete-folder' %}" hx-target=".folders">У</button>
+                    <button class="delete-folder-btn" hx-post="{% url 'a:delete-folder' %}" hx-target=".folders">У</button>
                 
                 </form>
 
@@ -78,25 +78,62 @@
 
             <div class="toggle-nav">
 
-                -
+                <div class="wrapper" id="toggle-nav">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19.394" height="28.21" viewBox="0 0 19.394 28.21">
+                        <path id="Icon_awesome-lightbulb" data-name="Icon awesome-lightbulb" d="M5.293,25.033a1.764,1.764,0,0,0,.3.975l.942,1.415A1.763,1.763,0,0,0,8,28.21h3.4a1.763,1.763,0,0,0,1.468-.787l.942-1.415a1.762,1.762,0,0,0,.3-.975l0-2.113H5.29l0,2.113ZM0,9.7a9.643,9.643,0,0,0,2.4,6.379,15.834,15.834,0,0,1,2.877,5.039c0,.014.006.043.006.043h8.829c0-.014,0-.028.006-.043a15.834,15.834,0,0,1,2.877-5.039A9.7,9.7,0,1,0,0,9.7ZM9.7,5.289A4.413,4.413,0,0,0,5.289,9.7a.882.882,0,0,1-1.763,0A6.178,6.178,0,0,1,9.7,3.526a.882.882,0,0,1,0,1.763Z" transform="translate(0 0)"/>
+                    </svg>
+
+                </div>
 
             </div>
 
             <div class="brand">
 
-
+                
 
             </div>
 
             <div class="search">
 
+                <input type="text" name="q" placeholder="Искать заметку">
 
+            </div>
+
+            <div class="mode">
+
+                <label class="toggle-mode">
+                    <input class='toggle-checkbox' type='checkbox'></input>
+                    <div class='toggle-slot'>
+                      <div class='sun-icon-wrapper'>
+                        <div class="iconify sun-icon" data-icon="feather-sun" data-inline="false"></div>
+                      </div>
+                      <div class='toggle-button'></div>
+                      <div class='moon-icon-wrapper'>
+                        <div class="iconify moon-icon" data-icon="feather-moon" data-inline="false"></div>
+                      </div>
+                    </div>
+                </label>
 
             </div>
 
             <div class="profile">
 
+                <div class="wrapper" id="profile">
 
+                    <span>{{ profile.initials }}</span>
+
+                </div>
+
+            </div>
+
+            <div class="profile-dropdown">
+
+                <!-- Profile preview -->
+
+                <!-- My account -->
+
+                <!-- Log out -->
 
             </div>
 
@@ -104,8 +141,10 @@
 
         <div class="side-nav">
 
-            <div class="page in">H</div>
-            <div class="page">L</div>
+            <div class="page"><div class="icon">H</div><div class="page-title"><span>Дом</span></div></div>
+            <div class="page"><div class="icon">L</div><div class="page-title"><span>Любимое</span></div></div>
+
+            <div class="page" id="create-folder-init"><div class="icon">+</div><div class="page-title"><span>Новый блокнотик</span></div></div>
 
             <div class="folders">
 
@@ -114,13 +153,12 @@
             </div>
 
 
-            <div class="page" id="create-folder-init">+</div>
-
-            <div class="page">A</div>
-            <div class="page">T</div>
+            <div class="page"><div class="icon">A</div><div class="page-title"><span>Архив</span></div></div>
+            <div class="page" hx-post="{% url 'a:trash' %}" hx-target=".notes-wrapper"><div class="icon">К</div><div class="page-title"><span>Корзина</span></div></div>
 
         </div>
 
+        
         <div class="new-note">
 
               <form> 
@@ -130,8 +168,7 @@
                 <input type="checkbox" name="p" id='nnp' hidden />
                 <input type="checkbox" name="l" id='nnl' hidden />
 
-            
-                <div class="wrapper">
+                <div class="nnw">
                 
                     <div class="top">
 
@@ -146,13 +183,12 @@
                         
                         <div class="right">
 
-                            <div>X</div>
+                            <div id="close-notepad-form">X</div>
 
                         </div>
 
                     </div>
-
-
+                    
                     <div class="extended">
 
                         <div class="rte">
@@ -173,50 +209,54 @@
 
                         </div>
 
-                        <input type="text" name="fu" id="folder-uids" hidden/>
-                        <input type="text" name="ft" id="folder-titles" />
+                        <div class="new-note-folders-wrapper">
 
-                        <div class="new-note-folder-list">
+                            <div class="new-note-folders">
 
+                                <span>Добавить заметку в блокнотик</span>
+                                
+                                <input type="text" id="search-notepad" placeholder="Название блокнотика">
+    
+                                <div class="folder-list"></div>
+    
+                                <form>
 
+                                    <input type="text" name="t" id="nft" hidden />
+                                    <button id="create-folder-from-search-btn" hx-post="{% url 'a:create-folder' %}" hx-target=".folders" style="display: none;">Создать</button>
 
-                        </div>
-
-                        <div class="new-note-folders">
-
-                            <span>Добавить заметку в блокнотик</span>
-                            
-                            <input type="text" name="t" id="search-notepad" placeholder="Название блокнотика">
-
-                            <div class="folder-list">
-
-
+                                </form>
 
                             </div>
-
-                            <button id="create-folder-from-search-btn" hx-post="{% url 'app:create-folder' %}" hx-target=".folders" style="display: none;">Создать</button>
 
                         </div>
 
                         <div class="content">
 
                             <input type="text" name="c" id="nnc" hidden />
-                            <div contenteditable="true" class="new-note-content"></div>
+                            <div contenteditable="true" class="new-note-content" placeholder="Я помню чудное мгновение..."></div>
+
+                            <div class="new-note-folder-list"></div>
 
                         </div>
 
+                        <input type="text" name="fu" id="folder-uids" hidden/>
                         
-                        <button class="create-note-btn" hx-post="{% url 'app:create-note' %}" hx-target=".notes">Создать</button>
+                        <button class="create-note-btn" hx-post="{% url 'a:create-note' %}" hx-target=".notes-wrapper">Создать</button>
                         
                     </div>
                 
                 </div>
 
             </form>
+
+            <form hx-enctype="multipart/form-data"
+                >
+        
+            </form>
             
         </div>
 
-        <div class="notes">
+        <div class="notes-wrapper">
 
             {% include 'components/notes.html' %}
 
@@ -226,8 +266,6 @@
 
 
         </div>
-
-        
 
     </body>
 
@@ -270,52 +308,102 @@
 
     <script>
 
+        /* Mode */
+
+        $('.mode').click(function () {
+
+            $("body").toggleClass('light');
+            $(".moon").toggleClass('sun');
+            $(".mode").toggleClass('day');
+        
+        });
+
         /* Folders */
 
         var folderTitles = [];
 
         $('#create-folder-from-search-btn').click(function() {
 
-            title = $('#search-notepad').val()
-            
-            /* Search for this title within folders every 5ms interval  */
-            /* Break out once found */
-            /* Append it to folder list */
+            found = false;
+            newTitle = $('#search-notepad').val();
+
+            $('#search-notepad').val('');
+            $('#search-notepad').focus();
 
         })
 
-        var folders, folderList;
+        var foldersOpen, folders, folderList;
+
+        foldersOpen = false;
 
         $('#folders').click(function() {
 
-            /* Get all folders  */
+            if (foldersOpen) {
 
-            folders = $('.folders').children();
-            
-            folders.each(function(i) {
+                $('.new-note-folders').animate({opacity: 0}, 750);
+                
+                setTimeout(function() {
+                    
+                    $('.new-note-folders').css('display', 'none');
 
-                uid = $(this).children('#uid').val();
-                title = $(this).children('.folder-title').text();
+                    $('.folder-list').children().each(function() {
 
-                $('.folder-list').append(
+                        if (!$(this).children('input').is(':checked')) {$(this).remove()}
 
-                    `
+                    });
+                
+                
+                }, 750)
 
-                        <div id='new-note-folder'>
+                foldersOpen = false;
 
-                            <input type='text' value='` + uid + `' hidden />
-                            <input type='checkbox' id='new-note-folder-check' onChange="addFolder(this)" />
-                            <span>` + title + ` </span>
+                
 
-                        </div>
+            } else {
 
-                    `
+                $('.new-note-folders').css('display', 'block');
+                $('.new-note-folders').animate({opacity: 1}, 750);
+                foldersOpen = true;
 
-                )
+                getFolders();
 
-            });
+            }        
 
         });
+
+        function getFolders() {
+
+            folders = $('.folders').children('.page');
+            
+                folders.each(function(i) {
+
+                    uid = $(this).children('#uid').val();
+                    
+                    if (!newNoteFolders.includes(uid) && uid != '') {
+                        
+                        title = $(this).children('.page-title').children('.folder-title').text();
+                                           
+                        $('.folder-list').append(
+
+                            `
+
+                                <div id='new-note-folder'>
+
+                                    <input type='text' value='` + uid + `' hidden />
+                                    <input type='checkbox' id='new-note-folder-check' onChange="addFolder(this)" />
+                                    <span>` + title + ` </span>
+
+                                </div>
+
+                            `
+
+                        )
+
+                    }
+
+                });
+
+        }
 
         var newNoteFolders = [];
 
@@ -327,24 +415,18 @@
 
             if (e.checked) {
 
-                /* Input uid to folder list */
-                /* Add a box to folder list */
-
                 $('.new-note-folder-list').append(
 
-                    `<div><span>` + title + `</span></div>`
+                    `<div class='note-folder'><span>` + title + `</span></div>`
                     
                 )
 
                 newNoteFolders.push(uid);
 
-                folderList = newNoteFolders.join(' ')
+                $('#folder-uids').val(newNoteFolders.join(' '));
 
-                $('#folder-uids').val(folderList);
 
             } else {
-
-                /* Find element */
 
                 folders = $('.new-note-folder-list').children('div').children('span');
 
@@ -368,71 +450,74 @@
 
         $('#search-notepad').keyup(function() {
 
-            folders = $('.folder-list').children();
-
-            folders.each(function() {
+            $('.folder-list').children().each(function() {
 
                 if (!$(this).children('input').is(':checked')) {$(this).remove()}
 
-            })
-
-            $('.folder-list').children();
-
-            query = $(this).val();
-
-            folders = $('.folders').children();
-
-            folderExists = false;
-            
-            folders.each(function(i) {
-
-                title = $(this).children('.folder-title').text();
-
-                if (title === query) {
-
-                    folderExists = true;
-
-                }
-
-                /* If folder not in checked folders */
-
-                if (title.search(query) >= 0) {
-
-                    $('.folder-list').append(
-
-                        `
-
-                            <div>
-
-                                <input type='checkbox' />
-                                <span>` + title + ` </span>
-
-                            </div>
-
-                        `
-
-                    )
-
-                }
-
             });
 
-            if (query !== '') {
+            folders = $('.folders').children('.page');
+
+            folderExists = false;
+
+            if (!$(this).val()) {
+
+                $('#create-folder-from-search-btn').hide();
+                
+            } else {
+
+                query = $(this).val();
+
+                $('#nft').val(query);
+
+                folders.each(function(i) {
+
+                    title = $(this).children('.page-title').children('page-title').text();
+                    alert(title)
+                    uid = $(this).children('#uid').val();
+
+                    if (title === query) {
+
+                        folderExists = true;
+
+                    }
+
+                    if (title.search(query) >= 0) {
+
+                        if (!newNoteFolders.includes(uid.toString())) {
+
+                            $('.folder-list').append(
+
+                                `
+
+                                    <div>
+
+                                        <input type='text' value='` + uid + `' hidden />
+                                        <input type='checkbox' onChange="addFolder(this)" />
+                                        <span>` + title + ` </span>
+
+                                    </div>
+
+                                `
+
+                            );
+
+                        }
+
+                    }
+
+                });
 
                 if (!folderExists) {
 
-                    $('#create-folder-from-search-btn').text("Создать '" + query + "'")
-                    $('#create-folder-from-search-btn').css('display', 'block');
+                    $('#create-folder-from-search-btn').text("Создать '" + query + "'");
+                    $('#create-folder-from-search-btn').show();
 
                 } else {
 
-                    $('#create-folder-from-search-btn').css('display', 'none');
+                    $('#create-folder-from-search-btn').hide();
 
                 }
-
-            } else {
-
-                $('#create-folder-from-search-btn').css('display', 'none');
 
             }
 
@@ -471,7 +556,7 @@
 
                     type: 'POST',
                     
-                    url: "{% url 'app:edit-folder' %}",
+                    url: "{% url 'a:edit-folder' %}",
 
                     data: {
 
@@ -499,8 +584,6 @@
 
         });
 
-        
-
         /* Create folder */
 
         $('#create-folder-init').click(function() {
@@ -524,23 +607,45 @@
 
         /* Sidenav */
 
+        var ww;
         var sidenavOpen = false;
         
         function toggleSidenav() {
 
+            ww = $(window).width();
+
             if (sidenavOpen) {
 
-                $('.side-nav').removeClass('open');
-                $('.new-note').css('marginLeft', 0);
-                $('.notes').css('marginLeft', 0);
+                $('.page-title').animate({opacity: 0}, 250);
+                $('.edit-folder-init').animate({opacity: 0}, 250);
+
+                setTimeout(function() {
+
+                    $('.side-nav').removeClass('open');
+                    $('.new-note').css({'marginLeft': 0, 'width': '100%'});
+                    $('.notes-wrapper').css('marginLeft', 0);
+
+                }, 250);
 
                 sidenavOpen = false;
 
             } else {
 
                 $('.side-nav').addClass('open');
-                $('.new-note').css('marginLeft', 110);
-                $('.notes').css('marginLeft', 200);
+                
+                if ($(window).width() > 800) {
+
+                    $('.new-note').css({'marginLeft': 110, 'width': 'calc(100% - 110px)'});
+                    $('.notes-wrapper').css('marginLeft', 200);
+
+                }
+
+                setTimeout(function() {
+
+                    $('.page-title').animate({opacity: 1}, 750);
+                    $('.edit-folder-init').animate({opacity: 1}, 750);
+
+                }, 750);
 
                 sidenavOpen = true;
 
@@ -554,7 +659,10 @@
 
                 $('.side-nav').addClass('open');
                 $('.new-note').css('marginLeft', 110);
-                $('.notes').css('marginLeft', 200);
+                $('.notes-wrapper').css('marginLeft', 200);
+
+                $('.page-title').animate({opacity: 1}, 750);
+                $('.edit-folder-init').animate({opacity: 1}, 750);
 
             }
 
@@ -564,15 +672,18 @@
 
             if (!sidenavOpen) {
 
+                $('.page-title').animate({opacity: 0}, 250);
+                $('.edit-folder-init').animate({opacity: 0}, 250);
+
                 $('.side-nav').removeClass('open');
                 $('.new-note').css('marginLeft', 0);
-                $('.notes').css('marginLeft', 0);
+                $('.notes-wrapper').css('marginLeft', 0);
 
             }
 
         });
 
-        $('.toggle-nav').click(function() {
+        $('#toggle-nav').click(function() {
 
             $(this).toggleClass('in');
 
@@ -581,13 +692,48 @@
         });
 
         /* New note */
+
+        var notepadOpen;
         
         $('#nnt').focus(function() {
             
-            $('.new-note').addClass('open');
+            if (!notepadOpen) {
 
-            $('.extended').animate({opacity: 1}, 750);
+                $('.new-note').addClass('open');
+
+                setTimeout(function() {
+
+                    $('.extended, .left, .right').animate({opacity: 1}, 1000);
+
+                }, 500)
+
+                $('#nnt').attr('placeholder', 'Заголовок');
+
+                $('.new-note-content').focus();
+
+                notepadOpen = true;
+
+            }
             
+        });
+
+        $('#close-notepad-form, .create-note-btn').click(function() {
+
+            $('.extended, .left, .right').animate({opacity: 0}, 500);
+
+            setTimeout(function() {
+
+                $('.new-note').removeClass('open');
+                $('.new-note-folders').css({'display': 'none', 'opacity': 0});
+
+            }, 500)
+
+
+            $('#nnt').attr('placeholder', 'Я помню чудное мгновение...');
+
+            notepadOpen = false;
+            foldersOpen = false;
+
         });
 
         $('#pin').click(function() {
@@ -659,12 +805,12 @@
             $('.new-note-content').focus();
 
         });
-
+        
         /* Checklist */
 
         let checkListHTML = `
 
-            <ul>
+            <ul class='checklist'>
 
                 <li class='checkbox-item'>
 
@@ -697,22 +843,37 @@
 
         $(".new-note-content").on('keydown', function(e) {
 
-        range = window.getSelection().getRangeAt(0);
-        parentEl = range.commonAncestorContainer.parentNode;
+            range = window.getSelection().getRangeAt(0);
+            parentEl = range.commonAncestorContainer.parentNode;
 
-        if (parentEl.className === 'checkbox-item') {
+            if (parentEl.className === 'checkbox-item') {
 
-            if (e.keyCode === 13) {
-                
-                setTimeout(function () {
+                if (e.keyCode === 13) {
+                    
+                    setTimeout(function () {
 
-                    document.execCommand('insertHTML', false, "<input type='checkbox' />");
+                        document.execCommand('insertHTML', false, "<input type='checkbox' />");
 
-                }, 1)
+                    }, 1)
+
+                }
 
             }
 
-        }
+        });
+
+        $('#erase').click(function() {
+
+            $('#nnt').val('');
+            $('#nnc').val('');
+            $('.new-note-content').html('');
+
+            /* Clear images */
+            
+            $('#folder-uids').val('');
+            $('.new-note-folder-list').html('');
+            
+            $('.new-note-content').focus();
 
         });
 

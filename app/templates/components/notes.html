@@ -1,38 +1,89 @@
+<div class='notes'>
+
+    <!-- Pinned -->
+
+    {% if other_notes %}
+
+        <span class="section-title">Другие заметки</span>
+        
+        <div class="note-section">
 
 
-<!-- Pinned -->
+            {% for note in other_notes %}
 
-{% if other_notes %}
+                <div class="note">
 
-    <span class="section-title">Другие заметки</span>
-    
-    <div class="note-section">
+                    <div class="text">
 
+                        <span class="title">{{ note.title }}</span>
+                        <span class="content">{{ note.content | safe }}</span>
 
-        {% for note in other_notes %}
-
-            <div class="note">
-
-                <div class="content">
-
-                    <span class="title">{{ note.title }}</span>
-                    <span class="content">{{ note.content | safe }}</span>
+                    </div>
 
                 </div>
 
+            {% endfor %}
+
+
+        </div>
+
+    {% endif %}
+
+
+
+    {% if trash %}
+
+        <div class="trash-note">
+            
+            <div>
+                
+                <span>Заметки в корзине самоудаляются через <span style="color: red;">неделю</span> после удаления.</span>
+        
+                {% if notes %}
+
+                    <button hx-post="{% url 'app:delete-deleted-notes' %}" hx-target=".notes">Очистить корзину</button>
+                
+                {% endif %}
+
             </div>
+
+        </div>
+
+        {% for note in notes %}
+
+                {{ note.title }}
 
         {% endfor %}
 
+        <script>
 
-    </div>
+            $('.new-note').css('display', 'none')
 
-    
+        </script>
 
-{% endif %}
+    {% endif %}
 
-<!-- Not pinned -->
+</div>
 
+<script>
 
+    $('.note').each(function() {
 
-<!-- Archived, loved, pinned($("#source").prependTo("#destination");), delete - AJAX -->
+        t = $(this).children().children('.title').text();
+        c = $(this).children().children('.content').text();
+
+        if (t === '' && c === '') {
+
+            $(this).children().append(
+
+                `
+                    <span class='empty'>Пустая заметка</span>
+                `
+            
+            )
+
+        }
+
+    });
+
+</script>

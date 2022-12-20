@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -41,6 +41,7 @@ def register(request):
         u.save()
 
         u.p.name = n
+        u.p.initials = ''.join(letter[0].upper() for letter in n.split(' '))[0:2]
         u.p.save()
 
         u = authenticate(username = u, password = p)
@@ -49,3 +50,9 @@ def register(request):
         return redirect('/home/')
 
     return render(request, 'auth/register.html')
+
+def change_mode(request):
+
+    request.user.p.mode = not request.user.p.mode
+    request.user.p.save()
+    return HttpResponse('K')

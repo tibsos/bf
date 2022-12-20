@@ -2,10 +2,12 @@
 
     <div class="page">
 
-        <!-- SVG -->
         <input type="text" id="uid" value="{{ folder.uid }}" hidden>
-        <span class="folder-title">{{ folder.title }}</span>
+        
+        <div class="icon">F</div>
 
+        <div class="page-title"><span class="folder-title">{{ folder.title }}</span></div>
+        
         <div class="edit-folder-init">E</div>
 
     </div>
@@ -13,6 +15,43 @@
 {% endfor %}
     
 <script>
+
+    if (!found) {
+
+        folders = $('.folders').children();
+            
+        folders.each(function(i) {
+
+            uid = $(this).children('#uid').val();
+            title = $(this).children('.folder-title').text();
+
+            if (title == newTitle) {
+
+                $('.folder-list').prepend(
+
+                    `
+
+                        <div id='new-note-folder'>
+
+                            <input type='text' value='` + uid + `' hidden />
+                            <input type='checkbox' id='new-note-folder-check' onChange="addFolder(this)" checked />
+                            <span>` + title + ` </span>
+
+                        </div>
+
+                    `
+
+                )
+
+                newNoteFolders.push(uid);
+
+            }
+
+        });
+
+        found = true;
+
+    }
 
     var folderTitle;
 
