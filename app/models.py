@@ -28,6 +28,10 @@ class Image(m.Model):
     def __str__(self):
 
         return f"{self.user.username} Image"
+    
+    class Meta:
+
+        ordering = ['-uploaded_at']
 
 class Folder(m.Model):
 
@@ -43,6 +47,10 @@ class Folder(m.Model):
 
         return self.title
 
+    class Meta:
+
+        ordering = ['-updated_at']
+
 class Note(m.Model):
 
     uid = m.UUIDField(default = u4)
@@ -54,7 +62,8 @@ class Note(m.Model):
     images = m.ManyToManyField(Image, blank = True, related_name = 'ni')
     folders = m.ManyToManyField(Folder, blank = True)
 
-    pinned = m.BooleanField(default = False)
+    archived = m.BooleanField(default = False)
+    p = m.BooleanField(default = False)
     loved = m.BooleanField(default = False)
     
     deleted = m.BooleanField(default = False)

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse 
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -50,6 +51,18 @@ def register(request):
         return redirect('/home/')
 
     return render(request, 'auth/register.html')
+
+def ce(request):
+
+    e = request.POST.get('e')
+
+    if User.objects.filter(username = e).exists():
+
+        return JsonResponse({'u': 'n'})
+
+    else:
+
+        return JsonResponse({'u': 'y'})
 
 def change_mode(request):
 

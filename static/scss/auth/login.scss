@@ -16,6 +16,18 @@ body {
 
 }
 
+svg {
+
+    fill: $text-color;
+
+}
+
+button:disabled {
+
+    opacity: 0.8;
+
+}
+
 
 .main {
 
@@ -32,7 +44,6 @@ body {
 
         position: relative;
 
-        height: 500px;
         width: 340px;
 
         background: rgb(246, 246, 246);
@@ -55,7 +66,6 @@ body {
 
             svg {
 
-                fill: $text-color;
                 transform: scale(2);
 
                 cursor: pointer;
@@ -88,33 +98,90 @@ body {
 
                 width: 100%;
 
-                input {
+                div {
 
                     position: relative;
                     left: 4%;
-        
+
                     width: 80%;
-                    height: 50px;
-        
-                    margin-bottom: 15px;
-                    padding: 0 20px 0 20px;
-                    
-                    border-radius: 50px;
-                    border: none;
 
-                    background: none;
-                    box-shadow: inset 1px 1px 8px #a0a0a0,
-                        inset -1px -1px 8px #ffffff;
+                    svg:first-child {
 
-                    font-size: 18px; 
-        
+                        position: absolute;
+                        left: 15px;
+                        top: 15px;
+
+                    }
+
+                    svg:nth-child(2) {
+
+                        position: absolute;
+                        right: -25px;
+                        top: 19px;
+
+                        opacity: 0;
+
+                    }
+
+                    input {
+            
+                        width: calc(100% - 30px);
+                        height: 50px;
+            
+                        margin-bottom: 15px;
+                        padding: 3px 20px 0 50px;
+                        
+                        border-radius: 50px;
+                        border: none;
+    
+                        background: none;
+                        box-shadow: inset 1px 1px 8px #a0a0a0,
+                            inset -1px -1px 8px #ffffff;
+    
+                        font-size: 18px; 
+            
+                    }
+            
+                    input:focus {
+            
+                        outline: none;
+            
+                    }
+
                 }
-        
-                input:focus {
-        
-                    outline: none;
-        
-                }
+
+            }
+
+            .error {
+
+                position: absolute;
+                top: 195px;
+                left: 20px;
+
+                color: red;
+
+                opacity: 0;
+
+            }
+
+            .unique {
+
+                position: absolute;
+                left: 20px;
+                top: -21px;
+
+                opacity: 0;
+
+                color: red;
+
+            }
+
+            .e {
+
+                display: block;
+                margin: 0 0 10px 20px;
+
+                color: red;
 
             }
 
@@ -154,7 +221,7 @@ body {
                     width: 90%;
                     height: 50px;
 
-                    margin-bottom: 20px;
+                    margin-bottom: 15px;
 
                     background: none;
 

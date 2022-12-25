@@ -52,21 +52,40 @@
                     {% csrf_token %}
     
                     <div class="fields">
-    
-                        <input type="text" name="u" placeholder="Электронная почта">
-                        <input type="text" name="p" placeholder="Пароль">
+                        
+                        <div>
+
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=" " role="img" aria-label="Warning Icon "><title>Warning Icon</title><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0.999756C4.13401 0.999756 1 4.13376 1 7.99976C1 11.8657 4.13401 14.9998 8 14.9998C11.866 14.9998 15 11.8657 15 7.99976C15 4.13376 11.866 0.999756 8 0.999756ZM0 7.99976C0 3.58148 3.58172 -0.000244141 8 -0.000244141C12.4183 -0.000244141 16 3.58148 16 7.99976C16 12.418 12.4183 15.9998 8 15.9998C3.58172 15.9998 0 12.418 0 7.99976ZM7.5 8.99951V3.99999H8.5V8.99951H7.5ZM9 11C9 11.5523 8.55228 12 8 12C7.44772 12 7 11.5523 7 11C7 10.4477 7.44772 10 8 10C8.55228 10 9 10.4477 9 11Z" fill="currentColor"></path></svg>
+
+                            <input type="text" name="u" id="e" placeholder="Электронная почта">
+
+                        </div>
+                        
+                        <div>
+
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=" " role="img" aria-label="Warning Icon "><title>Warning Icon</title><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0.999756C4.13401 0.999756 1 4.13376 1 7.99976C1 11.8657 4.13401 14.9998 8 14.9998C11.866 14.9998 15 11.8657 15 7.99976C15 4.13376 11.866 0.999756 8 0.999756ZM0 7.99976C0 3.58148 3.58172 -0.000244141 8 -0.000244141C12.4183 -0.000244141 16 3.58148 16 7.99976C16 12.418 12.4183 15.9998 8 15.9998C3.58172 15.9998 0 12.418 0 7.99976ZM7.5 8.99951V3.99999H8.5V8.99951H7.5ZM9 11C9 11.5523 8.55228 12 8 12C7.44772 12 7 11.5523 7 11C7 10.4477 7.44772 10 8 10C8.55228 10 9 10.4477 9 11Z" fill="currentColor"></path></svg>
+
+                            <input type="text" name="p" id="p" placeholder="Пароль">
+
+                        </div>
     
                     </div>
+
+                    {% if e %}
+
+                        <span class="e">Неверная почта или пароль</span>
+
+                    {% endif %}
 
                     <a href="">Не помню</a>
     
                     <div class="btns">
 
-                        <button type="submit">Войти</button>
+                        <button type="submit" id="l">Войти</button>
 
                         <a href="{% url 'u:r' %}">
 
-                            <button type="button">Зарегистрироваться</button>
+                            <button type="button">У меня нет аккаунта</button>
 
                         </a>
 
@@ -80,6 +99,32 @@
 
 
     </body>
+
+    {% if e %}
+
+        <style>
+
+            .wrapper {
+                        
+                height: 530px;            
+                    
+            }
+
+        </style>
+
+    {% else %}
+
+        <style>
+
+            .wrapper {
+                        
+                height: 500px;            
+                    
+            }
+
+        </style>
+
+    {% endif %}
 
     <style>
 
@@ -109,11 +154,102 @@
 
         }
 
+
+
+        
+
+
     </style>
 
     <script>
 
+        function delay(callback, ms) {
+
+            var timer = 0;
+
+            return function() {
+
+                var context = this, args = arguments;
+                clearTimeout(timer);
+                
+                timer = setTimeout(function () {
+
+                    callback.apply(context, args);
+
+                }, ms || 0);
+            };
+        }
+
+        function hasNumber(myString) {
+
+            return /\d/.test(myString);
         
+        }
+
+        var e, p;
+
+        function v() {
+
+            if (e && p) {
+
+                $('#l').prop('disabled', false);
+
+            } else {
+
+                $('#l').prop('disabled', true);
+
+            }
+
+        }
+
+        function ve(e) {
+
+            var re = /\S+@\S+\.\S+/;
+            return re.test(e);
+
+        }
+
+        $('#e').keyup(delay(function() {
+
+            if (ve($(this).val())) {
+
+                e = true;
+
+            } else {
+
+                e = false;
+
+            }
+
+            v();
+
+        }, 500));
+
+        $('#p').keyup(delay(function() {
+
+            p = $(this).val();
+
+            if (p.length > 7) {
+
+                if(hasNumber(p)) {
+
+                    p = true;
+
+                } else {
+
+                    p = false;
+
+                }
+
+            } else {
+
+                p = false;
+
+            }
+
+            v();
+
+        }, 500));
 
     </script>
 

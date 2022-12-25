@@ -13,6 +13,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name = 'lo'),
     path('register/', register, name = 'r'),
 
+    path('ce/', ce, name = 'ce'),
+
     path('change-mode/', change_mode, name = 'm'),
 
 ]

@@ -4,6 +4,13 @@ $text-color: #1E2330;
 
 $top-nav-height: 60px;
 
+html, body {
+
+    width: 100%;
+    height: 100%;
+
+}
+
 body {
 
     margin: 0;
@@ -14,9 +21,10 @@ body {
 
 }
 
+
 ::-webkit-scrollbar {
     
-    width: 8px;
+    width: 10px;
 
 }
 
@@ -49,6 +57,8 @@ body {
 }
 
 input[type=text] {
+
+    font-size: 18px;
 
     padding: 0 20px 0 20px;
 
@@ -119,6 +129,44 @@ button {
 
 }
 
+button:disabled, button[disabled] {
+
+    opacity: 0.4;
+
+}
+
+button:focus {
+
+    outline: none;
+
+}
+
+svg {
+
+    outline: $text-color;
+    fill: $text-color;
+
+}
+
+.l {
+
+    margin-top: 2px;
+
+}
+
+.fi {
+
+    transform: scale(0.65);
+
+    g {
+
+        fill: $text-color;
+
+    }
+    
+
+}
+
 .top-nav {
 
     position: relative;
@@ -180,7 +228,6 @@ button {
         }
 
     }
-
     
 
     .brand {
@@ -218,12 +265,49 @@ button {
 
         float: left;
 
+        .si {
+
+            position: relative;
+            left: 40px;
+
+        }
+
+        #cs {
+
+            position: relative;
+            right: -7px;
+
+            width: 35px;
+            height: 35px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            opacity: 0;
+
+            border-radius: 50px;
+            
+            box-shadow: 3px 3px 7px #ccc2b9,
+                -3px -3px 7px #ffffff;
+
+            cursor: pointer;
+
+            svg {
+
+                transform: scale(0.7);
+                padding: 1px 0 0 1px;
+
+            }
+
+        }
+
         input {
 
             height: 45px;
-            width: 90%;
+            width: 100%;
 
-            padding-top: 3px;
+            padding: 3px 0 0 50px;
 
             box-shadow: inset 3px 3px 7px #ccc2b9,
             inset -3px -3px 7px #ffffff;
@@ -295,6 +379,84 @@ button {
 
         }
 
+        .profile-dropdown {
+
+            position: absolute;
+            right: -10px;
+            top: 70px;
+
+            width: 180px;
+            height: 120px;
+
+            display: none;
+            opacity: 0;
+
+            border-radius: 30px;
+            background: $light-theme-color;
+
+            box-shadow: 3px 3px 7px #ccc2b9,
+            -3px -3px 7px #ffffff;
+
+            z-index: 9;
+
+            .content {
+
+                position: relative;
+
+                width: 100%;
+                height: 100%;
+
+                .options {
+
+                    position: relative;
+                    left: 10px;
+                    top: 10px;
+
+                    height: 200px;
+
+                    div {
+
+                        width: 160px;
+                        height: 40px;
+
+                        display: flex;
+                        align-items: center;
+
+                        margin-bottom: 20px;
+
+                        border-radius: 200px;
+
+                        box-shadow: 3px 3px 7px #ccc2b9,
+                            -3px -3px 7px #ffffff;
+
+                        cursor: pointer;
+
+                        svg {
+
+                            position: relative;
+                            left: 10px;
+
+
+                        }
+
+                        span {
+
+                            position: relative;
+                            left: 20px;
+
+                            font-size: 15px;
+
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+        }
+
     }
 
 }
@@ -311,7 +473,7 @@ button {
     top: 100px;
     left: 1.5%;
 
-    width: 70px;
+    width: 50px;
     max-height: calc(100% - 120px);
 
     padding: 10px 0 0 10px;
@@ -360,6 +522,7 @@ button {
         .page-title {
             
             position: absolute;
+            top: 2px;
             left: 45px;
 
             height: 45px;
@@ -382,7 +545,7 @@ button {
 
     }
 
-    .edit-folder-init {
+    .efi {
 
         position: absolute;
         top: 5px;
@@ -400,7 +563,15 @@ button {
         align-items: center;
         justify-content: center;
 
+        z-index: 2;
+
         opacity: 0;
+
+        svg {
+
+            transform: scale(0.75);
+
+        }
 
     }
 
@@ -408,13 +579,38 @@ button {
 
 .side-nav.open {
 
-    width: 280px;
+    width: 270px;
 
     .page {
 
         width: 250px;
 
     }
+
+}
+
+.current-note {
+
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.7);
+
+    opacity: 0;
+    display: none;
+
+    z-index: 10;
+
+    .wrapper {
+
+
+
+    }
+
 
 }
 
@@ -428,7 +624,7 @@ button {
     display: flex;
     justify-content: center;
 
-    transition: all 0.5s ease-in-out;
+    transition: all 0.75s ease-in-out;
 
     z-index: 1;
 
@@ -466,7 +662,11 @@ button {
 
                 div {
 
-                    display: inline-block;
+                    float: left;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
 
                     width: 45px;
                     height: 45px;
@@ -703,7 +903,7 @@ button {
                 width: 45px;
                 height: 45px;
 
-                margin: 0 6px 0 6px;
+                margin: 0 8px 0 8px;
                 
                 background: none;
 
@@ -712,7 +912,13 @@ button {
                 box-shadow: 3px 3px 7px #ccc2b9,
                     -3px -3px 7px #ffffff;
 
-                font-size: 16px;
+                font-size: 20px;
+
+                svg {
+
+                    margin-top: 6px;
+
+                }
                 
             }
 
@@ -733,7 +939,7 @@ button {
             align-items: center;
 
 
-            div {
+            .note-folder {
 
                 height: 15px;
                 min-width: 50px;
@@ -757,6 +963,12 @@ button {
                 white-space: nowrap;
                 overflow: hidden;
 
+
+                div {
+
+                    position: relative;
+
+                }
 
             }
 
@@ -786,6 +998,7 @@ button {
                 overflow-x: hidden;
                 overflow-y: auto;
 
+                font-size: 18px;
                 color: $text-color;
 
                 box-shadow: inset 3px 3px 7px #ccc2b9,
@@ -917,6 +1130,7 @@ button {
     display: flex;
     justify-content: center;
 
+    transition: opacity 0.75s ease-in-out;
     transition: margin 0.75s ease-in-out;
 
     z-index: 1;
@@ -929,6 +1143,7 @@ button {
 
     width: 600px;
 
+    transition: opacity 0.75s ease-in-out;
     transition: margin 0.75s ease-in-out;
 
     .section-title {
@@ -944,7 +1159,7 @@ button {
 
         position: relative;
         left: 0;
-        top: 40px;      
+        top: 30px;      
         
         width: 100%;
 
@@ -956,17 +1171,66 @@ button {
 
             width: 580px;
 
-            min-height: 80px;
+            min-height: 35px;
 
             display: inline;
+
+            opacity: 0;
             
             padding: 10px;
-            margin: 0 15px 15px 0;
+            margin: 0 15px 30px 0;
 
             border-radius: 30px;
 
             box-shadow: 3px 3px 7px #ccc2b9,
                 -3px -3px 7px #ffffff;
+
+            transition: opacity 1s ease-in-out;
+            transition: width 1s ease-in-out;
+
+            .actions {
+
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                z-index: 4;
+
+                opacity: 0;
+
+                transition: opacity 0.75s ease-in-out;
+
+                div {
+
+                    width: 40px;
+                    height: 40px;
+
+                    border-radius: 50px;
+
+                    margin-left: 10px;
+                    
+                    float: left;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    box-shadow: 3px 3px 7px #ccc2b9,
+                        -3px -3px 7px #ffffff;
+
+                    cursor: pointer;
+
+                    z-index: 5;
+
+                }
+
+                div.in {
+
+                    box-shadow: inset 3px 3px 7px #ccc2b9,
+                        inset -3px -3px 7px #ffffff;
+
+                }
+                
+            }
 
             .text {
 
@@ -977,6 +1241,8 @@ button {
                 white-space: nowrap;
                 overflow-x: hidden;
 
+                z-index: 3;
+
                 span {position: relative;}
 
                 .title {
@@ -984,17 +1250,41 @@ button {
                     font-size: 18px;
                     font-weight: bold;
 
+                    cursor: text;
+
                 }
 
                 .content {
 
-                    top: 10px;
+                    top: 5px;
 
                     text-overflow: ellipsis;
                     overflow: hidden;
                     display: -webkit-box;
                     -webkit-line-clamp: 15;
                     -webkit-box-orient: vertical;
+
+                    cursor: text;
+
+                    input[type='checkbox'] {
+
+                        margin-right: 20px;
+    
+                    }
+    
+                    .checklist {
+    
+                        padding-left: 5px;
+    
+                        list-style-type: none;
+    
+                        .checkbox-item {
+    
+                            margin-top: 15px;
+        
+                        }
+    
+                    }
 
                 }
 
@@ -1004,6 +1294,8 @@ button {
                     top: 0;
                     font-size: 20px;
                     color: grey;
+
+                    cursor: text;
 
                 }
 
@@ -1032,7 +1324,7 @@ button {
 
     z-index: -1;
 
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 
@@ -1142,7 +1434,7 @@ button {
 
     z-index: -1;
 
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 
@@ -1252,6 +1544,10 @@ button {
                 height: 40px;
     
                 background: none;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
     
                 box-shadow: 3px 3px 7px #ccc2b9,
                         -3px -3px 7px #ffffff;
@@ -1391,7 +1687,6 @@ button {
     transform: translate(12em, 2em) rotate(-15deg);
 }
 
-
 @media screen and (max-width: 970px) {
 
     .new-note {
@@ -1439,6 +1734,8 @@ button {
 
                         width: 37px;
                         height: 37px;
+
+                        margin: 0 7px 0 7px;
                         
                         transition: all 0.5s ease-in-out;
 
@@ -1469,24 +1766,50 @@ button {
 
     }
 
+    .notes-wrapper {
+
+        width: calc(100% - 50px);
+
+        .notes {
+
+            left: 50px;
+            width: 500px;
+
+            .note {
+
+                width: 480px;
+
+            }
+
+        }
+
+    }
+
 }
 
 @media screen and (max-width: 630px) {
 
+    input[type='text'] {
+
+        font-size: 17px;
+
+    }
+
+
     .new-note {
 
-        left: 55px;
-        width: calc(100% - 55px);
+        left: 60px;
+        width: calc(100% - 60px);
 
         .nnw {
 
-            width: 400px;
+            width: 380px;
 
             .top {
 
                 .title {
 
-                    width: 350px;
+                    width: 330px;
     
                 }
 
@@ -1507,7 +1830,7 @@ button {
                 .title {
 
                     top: 12px;
-                    width: 210px;
+                    width: 190px;
                     height: 35px;
         
                 }
@@ -1536,16 +1859,16 @@ button {
 
             }
 
-            
-
             .extended {
 
                 .rte {
 
                     button {
 
-                        width: 28px;
-                        height: 28px;
+                        width: 30px;
+                        height: 30px;
+
+                        margin: 0 6px 0 6px;
 
                         font-size: 14px;
 
@@ -1558,7 +1881,9 @@ button {
 
                     .new-note-content {
 
-                        width: 350px;
+                        width: 330px;
+
+                        font-size: 17px;
 
                     }
 
@@ -1567,12 +1892,31 @@ button {
                 .create-note-btn {
 
                     top: 100px;
-                    left: 110px;   
+                    left: 100px;   
                     
                     width: 180px;
                     height: 35px;
 
                 }
+
+            }
+
+        }
+
+    }
+
+    .notes-wrapper {
+
+        width: calc(100% - 60px);
+
+        .notes {
+
+            left: 60px;
+            width: 380px;
+
+            .note {
+
+                width: 360px;
 
             }
 

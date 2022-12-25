@@ -1,0 +1,192 @@
+{% load static %}
+{% load compress %}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>
+            
+            Договор-оферта | Блокнотик
+
+        </title>
+
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+
+        {% compress css %}
+
+            <link rel="stylesheet" href="{% static 'scss/base/terms.scss' %}" type="text/x-scss">
+            <link rel="stylesheet" href="{% static 'scss/base/navs.scss' %}" type="text/x-scss">
+
+        {% endcompress %}
+
+    </head>
+
+    <body>
+        
+        <div class="main">
+
+            <div class="top-nav">
+
+                {% include 'navs/top.html' %}
+                
+            </div>
+
+            <div class="sidenav">
+
+                <a href="{% url 'b:t'%}">
+
+                    <div>
+
+                        <h1>Договор-оферта</h1>
+
+                    </div>
+
+                </a>
+
+                <a href="{% url 'b:p'%}">
+
+                    <div>
+
+                        <h1>Политика конфиденциальности</h1>
+
+                    </div>
+
+                </a>
+
+                <a href="#">
+
+                    <div class="active">
+
+                        <h1>Юридическая информация</h1>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="info">
+
+                <h1>Юридическая информация</h1>
+
+                <table>
+
+                    <tr>
+
+                        <th>ИП Косяков Сергей Николаевич</th>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Номер телефона</td>
+                        <td>+79162893225</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Электронная почта</td>
+                        <td>kosyakovsn@gmail.com</td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>Юридический адрес</td>
+                        <td>117198, РОССИЯ, Москва, Улица Островитянова, д. 5, c. 3, квартира/офис 13</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Почтовый адрес</td>
+                        <td>117198, РОССИЯ, Москва, Улица Островитянова, д. 5, c. 3, квартира/офис 13</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Свидетельство о гос. регистрации</td>
+                        <td>672263249</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>ИНН</td>
+                        <td>773610567921</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>ОРГН</td>
+                        <td>322774600681412</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Р/с</td>
+                        <td>40802810902340002855</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Бик</td>
+                        <td>044525593</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>К/с</td>
+                        <td>30101810200000000593</td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        <!--     <div class="bottom-nav">
+
+                {% include 'navs/bot.html' %}
+    
+            </div> -->
+            
+
+        </div>
+
+
+    </body>
+
+    <style>
+
+        @font-face {
+
+            font-family: Comfortaa;
+            src: url("{% static 'fonts/Comfortaa.ttf' %}");
+        
+        }
+
+        body {
+
+            font-family: Comfortaa;
+
+        }
+
+    </style>
+
+</html>

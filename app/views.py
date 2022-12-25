@@ -11,23 +11,60 @@ from .models import *
 def home(request):
 
     c = {}
+    c['home'] = True
 
     c['folders'] = Folder.objects.filter(user = request.user)
 
-    notes = Note.objects.filter(user = request.user).filter(deleted = False)
+    notes = Note.objects.filter(user = request.user).filter(deleted = False).filter(archived = False)
 
-    pinned_notes = notes.filter(pinned = True)
-    other_notes = notes.filter(pinned = False)
+    p_notes = notes.filter(p = True)
+    other_notes = notes.filter(p = False)
 
-    c['pinned_notes'] = pinned_notes
+    c['p_notes'] = p_notes
     c['other_notes'] = other_notes
-
-    c['section'] = 'Дом'
 
     c['profile'] = request.user.p
 
 
     return render(request, 'home.html', c)
+
+@lr
+def s(request):
+
+    q = request.POST.get('q')
+
+    if q == '':
+
+        n = None
+        c['es'] = True
+
+    else:
+
+        n1 = list(Note.objects.filter(title__contains = q))
+        n2 = list(Note.objects.filter(content__contains = q))
+        n = set(n1 + n2)
+
+    c = {}
+
+    c['s'] = True
+    c['n'] = n
+
+    return render(request, 'components/notes.html', c)
+
+@lr
+def n(request, uid):
+    return render(request, 'components/note.html', {'note': Note.objects.get(uid = uid)})
+
+@lr
+def f(request, uid):
+
+    f = [Folder.objects.get(uid)]
+
+    c = {}
+
+    c['folder'] = f
+
+    return render(request, 'components/notes.html', c)
 
 @lr
 def trash(request):
@@ -54,12 +91,12 @@ def trash(request):
 @lr
 def create_note(request):
 
-    pinned = request.POST.get('p')
+    p = request.POST.get('p')
 
-    if pinned == 'on':
-        pinned = True
+    if p == 'on':
+        p = True
     else:
-        pinned = False
+        p = False
 
     loved = request.POST.get('l')
 
@@ -72,10 +109,10 @@ def create_note(request):
 
         user = request.user,
 
-        title = request.POST.get('t'),
+        title = request.POST.get('ti'),
         content = request.POST.get('c'),
 
-        pinned = pinned,
+        p = p,
         loved = loved,
 
     )
@@ -86,19 +123,74 @@ def create_note(request):
 
     if current_folder:
 
-        pass
+        notes = Note.objects.filter(user = request.user).filter(folders__contains = [current_folder]).filter(deleted = False).filter(archived = False).filter(loved = False)
 
     else:
 
-        notes = Note.objects.filter(user = request.user).filter(deleted = False)
+        notes = Note.objects.filter(user = request.user).filter(deleted = False).filter(archived = False)
 
-        pinned_notes = notes.filter(pinned = True)
-        other_notes = notes.filter(pinned = False)
+    p_notes = notes.filter(p = True)
+    other_notes = notes.filter(p = False)
 
-        c['pinned_notes'] = pinned_notes
-        c['other_notes'] = other_notes
+    c['p_notes'] = p_notes
+    c['other_notes'] = other_notes
 
     return render(request, 'components/notes.html', c)
+
+@lr
+def ut(request):
+
+    n = Note.objects.get(uid = request.POST.get('u'))
+    n.title = request.POST.get('t')
+    n.save()
+
+    return HttpResponse('K')
+
+@lr
+def uc(request):
+
+    n = Note.objects.get(uid = request.POST.get('u'))
+    n.content = request.POST.get('c')
+    n.save()
+
+    return HttpResponse('K')
+
+
+@lr
+def ln(request):
+
+    n = Note.objects.get(uid = request.POST.get('u'))
+    n.loved = not n.loved
+    n.save()
+
+    return HttpResponse('K')
+
+@lr
+def pn(request):
+
+    n = Note.objects.get(uid = request.POST.get('u'))
+    n.p = not n.p
+    n.save()
+
+    return HttpResponse('K')
+
+@lr
+def an(request):
+
+    n = Note.objects.get(uid = request.POST.get('u'))
+    n.archived = not n.archived
+    n.save()
+
+    return HttpResponse('K')
+
+@lr
+def dn(request):
+
+    n = Note.objects.get(uid = request.POST.get('u'))
+    n.deleted = not n.deleted
+    n.save()
+
+    return HttpResponse('K')
 
 @lr
 def delete_note(request):
@@ -112,10 +204,12 @@ def delete_note(request):
 @lr
 def create_folder(request):
 
+    print(request.POST)
+
     Folder.objects.create(
 
         user = request.user,
-        title = request.POST.get('t'),
+        title = request.POST.get('ft'),
 
     )
 

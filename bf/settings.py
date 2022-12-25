@@ -5,12 +5,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-x8#!pa=^#n(+*on8i%^9024kz06=&99-(a)$wt=!s-e(75c%0b'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
 
-    '127.0.0.1',
-    'localhost',
+    '46.39.51.113',
 
 ]
 
@@ -97,7 +96,7 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 
 STATICFILES_DIRS = (
@@ -121,3 +120,11 @@ MEDIA_URL = '/media/'
 
 LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = '/'
+
+TINYMCE_DEFAULT_CONFIG = {
+    "theme": "silver",
+    "height": 500,
+    "menubar": False,
+    "plugins": "table,codesample",
+    "toolbar": "table codesample",
+}
