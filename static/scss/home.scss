@@ -575,6 +575,13 @@ svg {
 
     }
 
+    .page.in {
+
+        box-shadow: inset 3px 3px 7px #ccc2b9,
+            inset -3px -3px 7px #ffffff;
+
+    }
+
 }
 
 .side-nav.open {
@@ -1135,6 +1142,18 @@ svg {
 
     z-index: 1;
 
+    .current-page-title {
+
+        position: relative;
+        
+        display: block;
+        margin: 10px 0 10px 0;
+
+        font-size: 35px;
+        font-weight: bold;
+
+    }
+
 }
 
 .notes {
@@ -1296,6 +1315,86 @@ svg {
                     color: grey;
 
                     cursor: text;
+
+                }
+
+                
+
+
+            }
+
+        }
+
+        .folders {
+
+            position: relative;
+
+            padding: 10px 10px 0 10px;
+
+            width: calc(100% - 20px);
+
+            .folder {
+
+                position: relative;
+
+                height: 16px;
+                min-width: 20px;
+                max-width: 150px;
+
+                
+                display: inline-block;
+                justify-content: center;
+                align-items: center;
+                
+                padding: 12px;
+                margin: 15px 7px 0 7px;
+                
+                border-radius: 50px;
+                
+                box-shadow: 3px 3px 7px #ccc2b9,
+                -3px -3px 7px #ffffff;
+
+                
+
+                span {
+                    
+                    float: left;
+                    font-size: 15px;
+                
+                }
+
+                div {
+
+                    position: absolute;
+                    right: 1px;
+                    bottom: 2px;
+
+                    height: 35px;
+                    width: 35px;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    border-radius: 50px;
+
+                    background: $light-theme-color;
+
+                    box-shadow: 3px 3px 7px #ccc2b9,
+                        -3px -3px 7px #ffffff;
+
+                    cursor: pointer;
+
+                    opacity: 0;
+                    transition: opacity 0.25s ease-in-out;
+
+                    svg {
+
+                        position: relative;
+                        bottom: 1px;
+                        transform: scale(0.5);
+
+                    }
 
                 }
 
@@ -1566,7 +1665,7 @@ svg {
 
     position: relative;
     left: 0;
-    top: -50px;
+    top: 0;
 
     width: 100%;
 

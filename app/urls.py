@@ -15,6 +15,7 @@ ajax_urlpatterns = [
     path('delete-note/', delete_note, name = 'delete-note'),
     
     path('edit-folder/', edit_folder, name = 'edit-folder'),
+    path('rf/', rf, name = 'rf'),
 
     path('ut/', ut, name='ut'),
     path('uc/', uc, name='uc'),
@@ -28,13 +29,14 @@ ajax_urlpatterns = [
 
 htmx_urlpatterns = [
 
-    path('s/', s, name = 's'),
+    path('s/', s, name = 's'), # search
+    path('all/', all, name = 'all'),
+    path('loved/', l, name = 'l'), 
+    path('f/<uuid:uid>/', f, name = 'f'),
+    path('archived/', a, name = 'a'), 
+    path('trash/', t, name = 't'),
 
     path('n/<uuid:uid>/', n, name = 'n'),
-
-    path('f/<uuid:uid>/', f, name = 'f'),
-
-    path('trash/', trash, name = 'trash'),
 
     path('create-note/', create_note, name = 'create-note'),
 

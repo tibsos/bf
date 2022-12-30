@@ -11,22 +11,58 @@ from .models import *
 def home(request):
 
     c = {}
-    c['home'] = True
+    c['h'] = True
 
     c['folders'] = Folder.objects.filter(user = request.user)
 
     notes = Note.objects.filter(user = request.user).filter(deleted = False).filter(archived = False)
 
-    p_notes = notes.filter(p = True)
-    other_notes = notes.filter(p = False)
+    c['pn'] = notes.filter(p = True)
+    c['on'] = notes.filter(p = False)
 
-    c['p_notes'] = p_notes
-    c['other_notes'] = other_notes
-
-    c['profile'] = request.user.p
-
+    c['p'] = request.user.p
 
     return render(request, 'home.html', c)
+
+def all(request):
+
+    notes = Note.objects.filter(user = request.user).filter(deleted = False).filter(archived = False)
+
+    c = {}
+    c['h'] = True
+
+    c['pn'] = notes.filter(p = True)
+    c['on'] = notes.filter(p = False)
+
+    return render(request, 'components/notes.html', c)
+
+@lr
+def l(request):
+
+    c = {}
+    c['l'] = True
+
+    notes = Note.objects.filter(user = request.user).filter(loved = True)
+
+    c['pn'] = notes.filter(p = True)
+    c['on'] = notes.filter(p = False)
+
+
+    return render(request, 'components/notes.html', c)
+
+@lr
+def a(request):
+
+    c = {}
+    c['a'] = True
+
+    notes = Note.objects.filter(user = request.user).filter(archived = True)
+
+
+    c['pn'] = notes.filter(p = True)
+    c['on'] = notes.filter(p = False)
+
+    return render(request, 'components/notes.html', c)
 
 @lr
 def s(request):
@@ -45,8 +81,8 @@ def s(request):
         n = set(n1 + n2)
 
     c = {}
-
     c['s'] = True
+
     c['n'] = n
 
     return render(request, 'components/notes.html', c)
@@ -58,18 +94,23 @@ def n(request, uid):
 @lr
 def f(request, uid):
 
-    f = [Folder.objects.get(uid)]
+    f = Folder.objects.get(uid = uid)
 
     c = {}
+    c['f'] = f
 
-    c['folder'] = f
+    notes = Note.objects.filter(folders__in = [f]).filter(deleted = False).filter(archived = False)
+
+    c['pn'] = notes.filter(p = True)
+    c['on'] = notes.filter(p = False)
 
     return render(request, 'components/notes.html', c)
 
 @lr
-def trash(request):
+def t(request):
 
     c = {}
+    c['t'] = True 
 
     notes = list(Note.objects.filter(user = request.user).filter(deleted = True))
 
@@ -84,7 +125,6 @@ def trash(request):
 
     c['notes'] = notes
 
-    c['trash'] = True 
 
     return render(request, 'components/notes.html', c)
 
@@ -105,7 +145,7 @@ def create_note(request):
     else:
         loved = False
 
-    Note.objects.create(
+    note = Note.objects.create(
 
         user = request.user,
 
@@ -117,23 +157,40 @@ def create_note(request):
 
     )
 
+    folder_uids = request.POST.get('fu')
+
+    if folder_uids:
+
+        folder_uids = folder_uids.split(' ')
+
+        for uid in folder_uids:
+
+            folder = Folder.objects.get(uid = uid)
+            note.folders.add(folder)
+    
     c = {}
 
     current_folder = request.POST.get('cf')
-
+    
     if current_folder:
+        
+        current_folder = Folder.objects.get(uid = current_folder)
+        c['f'] = current_folder
+        notes = Note.objects.filter(user = request.user).filter(folders__in = [current_folder]).filter(deleted = False).filter(archived = False).filter(loved = False)
 
-        notes = Note.objects.filter(user = request.user).filter(folders__contains = [current_folder]).filter(deleted = False).filter(archived = False).filter(loved = False)
+    elif request.POST.get('lp'):
 
-    else:
+        c['l'] = True
+        notes = Note.objects.filter(user = request.user).filter(deleted = False).filter(archived = False).filter(loved = True)
 
+    else:  
+
+        c['h'] = True
         notes = Note.objects.filter(user = request.user).filter(deleted = False).filter(archived = False)
 
-    p_notes = notes.filter(p = True)
-    other_notes = notes.filter(p = False)
-
-    c['p_notes'] = p_notes
-    c['other_notes'] = other_notes
+    
+    c['pn'] = notes.filter(p = True)
+    c['on'] = notes.filter(p = False)
 
     return render(request, 'components/notes.html', c)
 
@@ -209,11 +266,11 @@ def create_folder(request):
     Folder.objects.create(
 
         user = request.user,
-        title = request.POST.get('ft'),
+        title = request.POST.get('t'),
 
     )
 
-    return render(request, 'components/folders.html', {'folders': Folder.objects.filter(user = request.user)})
+    return render(request, 'components/folders.html', {'f': Folder.objects.filter(user = request.user)})
 
 @lr
 def edit_folder(request):
@@ -225,11 +282,18 @@ def edit_folder(request):
     return HttpResponse('K')
 
 @lr
+def rf(request):
+
+    Note.objects.get(uid = request.POST.get('n')).folders.remove(Folder.objects.get(uid = request.POST.get('f')))
+
+    return HttpResponse('K')
+
+@lr
 def delete_folder(request):
 
     Folder.objects.get(uid = request.POST.get('u')).delete()
 
-    return render(request, 'components/folders.html', {'folders': Folder.objects.filter(user = request.user)})
+    return render(request, 'components/folders.html', {'folders': Folder.objects.filter(user = request.user), 'h': True, })
 
 
 @lr
@@ -237,4 +301,4 @@ def delete_deleted_notes(request):
 
     Note.objects.filter(user = request.user).filter(deleted = True).delete()
 
-    return render(request, 'components/notes.html', {'notes': None, 'trash': True})
+    return render(request, 'components/notes.html', {'notes': None, 't': True})

@@ -1,8 +1,87 @@
+
+
 <div class='notes'>
 
-    {% if folder %}
+    {% if f %}
 
-        <span class="folder-title">{{ folder.title }}</span>
+        <span class="current-page-title">{{ f.title }}</span>
+
+        <script>
+
+            $('.new-note').css('display', 'flex');
+
+            $('#nnf').val("{{ f.uid }}")
+
+            $('.new-note-folder-list').html('');
+
+            $('.new-note-folder-list').append(
+
+                `<div class='note-folder'><span>` + '{{f.title}}' + `</span></div>`
+                    
+            );
+
+            newNoteFolders.push("{{ f.uid }}");
+            $('#folder-uids').val(newNoteFolders.join(' '));
+
+            $('#lp').prop('checked', false);
+    
+        </script>
+
+    {% endif %}
+
+    {% if h %}
+
+        <span class="current-page-title">Дом</span>
+
+        <script>
+
+            $('.new-note').css('display', 'flex');
+            $('#lp').prop('checked', false);
+    
+        </script>
+
+    {% endif %}
+
+    {% if l %}
+
+        <span class="current-page-title">Любимое</span>
+
+        <script>
+
+            $('.new-note').css('display', 'flex');
+            $('#lp').prop('checked', true);
+    
+        </script>
+
+    {% endif %}
+
+    {% if a %}
+
+        <span class="current-page-title">Архив</span>
+
+        <script>
+
+            $('.new-note').css('display', 'none');
+
+            $('#lp').prop('checked', false);
+    
+        </script>
+
+    {% endif %}
+
+    {% if t %}
+
+        <span class="current-page-title">Корзина</span>
+
+        <script>
+
+            $('.new-note').css('display', 'none');
+
+            $('#lp').prop('checked', false);
+    
+        </script>
+
+    {% endif %}
 
     {% if s %}
 
@@ -27,17 +106,105 @@
 
     {% endif %}
 
+    {% if pn %}
+
+        <span class="section-title" id="pinned-section">Закрепленные заметки</span>
+        
+        <div class="note-section" id="pinned-notes">
+
+            {% for note in pn %}
+
+                <div class="note"
+                    hx-trigger="click target:.note"
+                    hx-get="{% url 'a:n' note.uid %}"
+                    hx-target=".current-note">
+
+                    <div class="actions">
+
+                        <input type="text" value="{{ note.uid }}" hidden />
+
+                        {% if note.loved %}
+
+                            <div class="love in"><svg xmlns="http://www.w3.org/2000/svg" width="24.806" height="21.933" viewBox="0 0 24.806 21.933">
+                                <path id="Icon_awesome-heart" data-name="Icon awesome-heart" d="M22.4,3.747a6.576,6.576,0,0,0-9.04.666l-.954.994-.954-.994a6.576,6.576,0,0,0-9.04-.666,7.08,7.08,0,0,0-.48,10.178L11.3,23.707a1.508,1.508,0,0,0,2.195,0l9.375-9.781A7.076,7.076,0,0,0,22.4,3.747Z" transform="translate(0.001 -2.248)"/>
+                              </svg></div>
+
+                        {% else %}
+
+                            <div class="love"><svg xmlns="http://www.w3.org/2000/svg" width="24.806" height="21.933" viewBox="0 0 24.806 21.933">
+                                <path id="Icon_awesome-heart" data-name="Icon awesome-heart" d="M22.4,3.747a6.576,6.576,0,0,0-9.04.666l-.954.994-.954-.994a6.576,6.576,0,0,0-9.04-.666,7.08,7.08,0,0,0-.48,10.178L11.3,23.707a1.508,1.508,0,0,0,2.195,0l9.375-9.781A7.076,7.076,0,0,0,22.4,3.747Z" transform="translate(0.001 -2.248)"/>
+                              </svg></div>
+
+                        {% endif %}
+                        <div class="pin in"><svg xmlns="http://www.w3.org/2000/svg" width="23.858" height="23.858" viewBox="0 0 23.858 23.858">
+                            <path id="Icon_simple-pinboard" data-name="Icon simple-pinboard" d="M10.585,14.5l4.482,4.587-.716-4.038,6.1-7.522,3.408.182L16.323,0V2.936L9.152,9.542l-4.486-1.1L9.326,13.4,0,23.858,10.585,14.5Z"/>
+                          </svg></div>
+                        <div class="archive"><svg xmlns="http://www.w3.org/2000/svg" width="25.015" height="22.657" viewBox="0 0 25.015 22.657">
+                            <g id="Icon_ionic-ios-archive" data-name="Icon ionic-ios-archive" transform="translate(-3.375 -4.5)">
+                              <path id="Контур_1" data-name="Контур 1" d="M28.149,7.761H3.616a.238.238,0,0,1-.241-.233V6.363A1.892,1.892,0,0,1,5.3,4.5H26.465A1.892,1.892,0,0,1,28.39,6.363V7.528A.238.238,0,0,1,28.149,7.761Z"/>
+                              <path id="Контур_2" data-name="Контур 2" d="M27.169,10.266H4.982a.476.476,0,0,0-.482.466V25.988a1.9,1.9,0,0,0,1.929,1.863H25.722a1.9,1.9,0,0,0,1.929-1.863V10.731A.476.476,0,0,0,27.169,10.266ZM19.09,18.534h-6a.856.856,0,0,1-.862-.716.826.826,0,0,1,.838-.914h6a.856.856,0,0,1,.862.716A.829.829,0,0,1,19.09,18.534Z" transform="translate(-0.193 -0.694)"/>
+                            </g>
+                          </svg></div>
+                        <div class="delete"><svg xmlns="http://www.w3.org/2000/svg" width="18.008" height="24.68" viewBox="0 0 18.008 24.68">
+                            <g id="Icon_ionic-ios-trash" data-name="Icon ionic-ios-trash" transform="translate(-8.297 -4.5)">
+                              <path id="Контур_3" data-name="Контур 3" d="M9.359,9l1.525,20.44a1.981,1.981,0,0,0,1.894,2.06h9.114a1.981,1.981,0,0,0,1.894-2.06L25.292,9ZM13.34,27.633,12.907,11.25h1.2l.446,16.383Zm4.544,0H16.721V11.25h1.164Zm3.381,0h-1.2L20.5,11.25h1.2Z" transform="translate(0 -2.32)"/>
+                              <path id="Контур_4" data-name="Контур 4" d="M24.347,6.469H22L20.283,4.852a1.269,1.269,0,0,0-.861-.352H15.193a1.288,1.288,0,0,0-.874.352L12.6,6.469H10.254A1.733,1.733,0,0,0,8.3,8.3H26.3A1.733,1.733,0,0,0,24.347,6.469Z"/>
+                            </g>
+                          </svg></div>
+
+                    </div>
+
+                    <div class="text"
+                    hx-get="{% url 'a:n' note.uid %}"
+                    hx-target=".current-note">
+
+                        <input type="text" value='{{ note.uid }}' hidden/>
+
+                        <span class="title">{{ note.title }}</span>
+                        <span class="content">{{ note.content | safe }}</span>
+
+                    </div>
+
+                    {% if note.folders %}
+
+                        <div class="folders">
+
+                            {% for folder in note.folders.all %}
+
+                                <div class="folder">
+
+                                    <input type="text" id="nu" value="{{ note.uid }}" hidden />
+                                    <input type="text" id='fu' value="{{ folder.uid }}" hidden />
+                                    <span>{{ folder.title }}</span>
+                                    <div id="remove-folder"><svg style="margin-top: 2px;" xmlns="http://www.w3.org/2000/svg" width="24.216" height="24.216" viewBox="0 0 24.216 24.216">
+                                        <rect id="Прямоугольник_1" data-name="Прямоугольник 1" width="30.639" height="3.608" rx="1.804" transform="translate(2.551) rotate(45)"/>
+                                        <rect id="Прямоугольник_2" data-name="Прямоугольник 2" width="30.639" height="3.608" rx="1.804" transform="translate(24.216 2.551) rotate(135)"/>
+                                      </svg></div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+
+        </div>
+
     {% endif %}
 
-    <!-- Pinned -->
+    {% if on %}
 
-    {% if other_notes %}
-
-        <span class="section-title">Другие заметки</span>
+        <span class="section-title" id='other-section'>Другие заметки</span>
         
-        <div class="note-section">
+        <div class="note-section" id="other-notes">
 
-            {% for note in other_notes %}
+            {% for note in on %}
 
                 <div class="note"
                     hx-trigger="click target:.note"
@@ -90,6 +257,30 @@
 
                     </div>
 
+                    {% if note.folders %}
+
+                        <div class="folders">
+
+                            {% for folder in note.folders.all %}
+
+                                <div class="folder">
+
+                                    <input type="text" id="nu" value="{{ note.uid }}" hidden />
+                                    <input type="text" id='fu' value="{{ folder.uid }}" hidden />
+                                    <span>{{ folder.title }}</span>
+                                    <div id="remove-folder"><svg style="margin-top: 2px;" xmlns="http://www.w3.org/2000/svg" width="24.216" height="24.216" viewBox="0 0 24.216 24.216">
+                                        <rect id="Прямоугольник_1" data-name="Прямоугольник 1" width="30.639" height="3.608" rx="1.804" transform="translate(2.551) rotate(45)"/>
+                                        <rect id="Прямоугольник_2" data-name="Прямоугольник 2" width="30.639" height="3.608" rx="1.804" transform="translate(24.216 2.551) rotate(135)"/>
+                                      </svg></div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
                 </div>
 
             {% endfor %}
@@ -99,7 +290,7 @@
 
     {% endif %}
 
-    {% if trash %}
+    {% if t %}
 
         <div class="trash-note">
             
@@ -109,7 +300,7 @@
         
                 {% if notes %}
 
-                    <button hx-post="{% url 'app:delete-deleted-notes' %}" hx-target=".notes">Очистить корзину</button>
+                    <button hx-post="{% url 'a:delete-deleted-notes' %}" hx-target=".notes">Очистить корзину</button>
                 
                 {% endif %}
 
@@ -117,151 +308,159 @@
 
         </div>
 
-        {% for note in notes %}
+        {% if notes %}
 
-                {{ note.title }}
+        <div class="note-section" id="trashed-notes">
 
-        {% endfor %}
+            {% for note in notes %}
 
-        <script>
+                <div class="note"
+                    hx-trigger="click target:.note"
+                    hx-get="{% url 'a:n' note.uid %}"
+                    hx-target=".current-note">
 
-            $('.new-note').css('display', 'none');
+                    <div class="actions">
 
-        </script>
+                        <input type="text" value="{{ note.uid }}" hidden />
+
+                        {% if note.loved %}
+
+                            <div class="love in"><svg xmlns="http://www.w3.org/2000/svg" width="24.806" height="21.933" viewBox="0 0 24.806 21.933">
+                                <path id="Icon_awesome-heart" data-name="Icon awesome-heart" d="M22.4,3.747a6.576,6.576,0,0,0-9.04.666l-.954.994-.954-.994a6.576,6.576,0,0,0-9.04-.666,7.08,7.08,0,0,0-.48,10.178L11.3,23.707a1.508,1.508,0,0,0,2.195,0l9.375-9.781A7.076,7.076,0,0,0,22.4,3.747Z" transform="translate(0.001 -2.248)"/>
+                              </svg></div>
+
+                        {% else %}
+
+                            <div class="love"><svg xmlns="http://www.w3.org/2000/svg" width="24.806" height="21.933" viewBox="0 0 24.806 21.933">
+                                <path id="Icon_awesome-heart" data-name="Icon awesome-heart" d="M22.4,3.747a6.576,6.576,0,0,0-9.04.666l-.954.994-.954-.994a6.576,6.576,0,0,0-9.04-.666,7.08,7.08,0,0,0-.48,10.178L11.3,23.707a1.508,1.508,0,0,0,2.195,0l9.375-9.781A7.076,7.076,0,0,0,22.4,3.747Z" transform="translate(0.001 -2.248)"/>
+                              </svg></div>
+
+                        {% endif %}
+
+                        {% if note.pinned %}
+
+                            <div class="pin in"><svg xmlns="http://www.w3.org/2000/svg" width="23.858" height="23.858" viewBox="0 0 23.858 23.858">
+                                <path id="Icon_simple-pinboard" data-name="Icon simple-pinboard" d="M10.585,14.5l4.482,4.587-.716-4.038,6.1-7.522,3.408.182L16.323,0V2.936L9.152,9.542l-4.486-1.1L9.326,13.4,0,23.858,10.585,14.5Z"/>
+                            </svg></div>
+
+                        {% else %}
+
+                            <div class="pin"><svg xmlns="http://www.w3.org/2000/svg" width="23.858" height="23.858" viewBox="0 0 23.858 23.858">
+                                <path id="Icon_simple-pinboard" data-name="Icon simple-pinboard" d="M10.585,14.5l4.482,4.587-.716-4.038,6.1-7.522,3.408.182L16.323,0V2.936L9.152,9.542l-4.486-1.1L9.326,13.4,0,23.858,10.585,14.5Z"/>
+                            </svg></div>
+
+                        {% endif %}
+
+                        {% if note.archived %}
+
+                            <div class="archive in"><svg xmlns="http://www.w3.org/2000/svg" width="25.015" height="22.657" viewBox="0 0 25.015 22.657">
+                                <g id="Icon_ionic-ios-archive" data-name="Icon ionic-ios-archive" transform="translate(-3.375 -4.5)">
+                                <path id="Контур_1" data-name="Контур 1" d="M28.149,7.761H3.616a.238.238,0,0,1-.241-.233V6.363A1.892,1.892,0,0,1,5.3,4.5H26.465A1.892,1.892,0,0,1,28.39,6.363V7.528A.238.238,0,0,1,28.149,7.761Z"/>
+                                <path id="Контур_2" data-name="Контур 2" d="M27.169,10.266H4.982a.476.476,0,0,0-.482.466V25.988a1.9,1.9,0,0,0,1.929,1.863H25.722a1.9,1.9,0,0,0,1.929-1.863V10.731A.476.476,0,0,0,27.169,10.266ZM19.09,18.534h-6a.856.856,0,0,1-.862-.716.826.826,0,0,1,.838-.914h6a.856.856,0,0,1,.862.716A.829.829,0,0,1,19.09,18.534Z" transform="translate(-0.193 -0.694)"/>
+                                </g>
+                            </svg></div>
+
+                        {% else %}
+
+                            <div class="archive"><svg xmlns="http://www.w3.org/2000/svg" width="25.015" height="22.657" viewBox="0 0 25.015 22.657">
+                                <g id="Icon_ionic-ios-archive" data-name="Icon ionic-ios-archive" transform="translate(-3.375 -4.5)">
+                                <path id="Контур_1" data-name="Контур 1" d="M28.149,7.761H3.616a.238.238,0,0,1-.241-.233V6.363A1.892,1.892,0,0,1,5.3,4.5H26.465A1.892,1.892,0,0,1,28.39,6.363V7.528A.238.238,0,0,1,28.149,7.761Z"/>
+                                <path id="Контур_2" data-name="Контур 2" d="M27.169,10.266H4.982a.476.476,0,0,0-.482.466V25.988a1.9,1.9,0,0,0,1.929,1.863H25.722a1.9,1.9,0,0,0,1.929-1.863V10.731A.476.476,0,0,0,27.169,10.266ZM19.09,18.534h-6a.856.856,0,0,1-.862-.716.826.826,0,0,1,.838-.914h6a.856.856,0,0,1,.862.716A.829.829,0,0,1,19.09,18.534Z" transform="translate(-0.193 -0.694)"/>
+                                </g>
+                            </svg></div>
+
+                        {% endif %}
+                 
+                        <div class="delete in"><svg xmlns="http://www.w3.org/2000/svg" width="18.008" height="24.68" viewBox="0 0 18.008 24.68">
+                            <g id="Icon_ionic-ios-trash" data-name="Icon ionic-ios-trash" transform="translate(-8.297 -4.5)">
+                              <path id="Контур_3" data-name="Контур 3" d="M9.359,9l1.525,20.44a1.981,1.981,0,0,0,1.894,2.06h9.114a1.981,1.981,0,0,0,1.894-2.06L25.292,9ZM13.34,27.633,12.907,11.25h1.2l.446,16.383Zm4.544,0H16.721V11.25h1.164Zm3.381,0h-1.2L20.5,11.25h1.2Z" transform="translate(0 -2.32)"/>
+                              <path id="Контур_4" data-name="Контур 4" d="M24.347,6.469H22L20.283,4.852a1.269,1.269,0,0,0-.861-.352H15.193a1.288,1.288,0,0,0-.874.352L12.6,6.469H10.254A1.733,1.733,0,0,0,8.3,8.3H26.3A1.733,1.733,0,0,0,24.347,6.469Z"/>
+                            </g>
+                          </svg></div>
+                    </div>
+
+                    <div class="text"
+                    hx-get="{% url 'a:n' note.uid %}"
+                    hx-target=".current-note">
+
+                        <input type="text" value='{{ note.uid }}' hidden/>
+
+                        <span class="title">{{ note.title }}</span>
+                        <span class="content">{{ note.content | safe }}</span>
+
+                    </div>
+
+                    {% if note.folders %}
+
+                        <div class="folders">
+
+                            {% for folder in note.folders.all %}
+
+                                <div class="folder">
+
+                                    <input type="text" id="nu" value="{{ note.uid }}" hidden />
+                                    <input type="text" id='fu' value="{{ folder.uid }}" hidden />
+                                    <span>{{ folder.title }}</span>
+                                    <div id="remove-folder"><svg style="margin-top: 2px;" xmlns="http://www.w3.org/2000/svg" width="24.216" height="24.216" viewBox="0 0 24.216 24.216">
+                                        <rect id="Прямоугольник_1" data-name="Прямоугольник 1" width="30.639" height="3.608" rx="1.804" transform="translate(2.551) rotate(45)"/>
+                                        <rect id="Прямоугольник_2" data-name="Прямоугольник 2" width="30.639" height="3.608" rx="1.804" transform="translate(24.216 2.551) rotate(135)"/>
+                                      </svg></div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
 
     {% endif %}
 
 </div>
 
+{% if loved %}
+
+    <script>
+
+        $('.love').click(function() {
+
+            n = $(this).parent().parent();
+            n.animate({'opacity': 0}, 1000);
+            setTimeout(function(){n.hide();}, 1000);
+
+        });
+
+    </script>
+
+{% endif %}
+
+
 <script>
 
-    $('input[type=checkbox]').each(function() {
+    $('.note-checkbox').each(function() {
 
         if ($(this).prop('id') == 't') {
             
             $(this).prop('checked', true);
-
+           
         } else {
 
             $(this).prop('checked', false);
-
+            
         }
 
     });
 
-    $('input[type=checkbox]').click(function(e) {
-
-        $(this).prop('checked', !$(this).prop('checked'))
-
-    })
-
     $('.note').css('opacity', 1);
     $('.notes').css('opacity', 1);
-
-    /* Actions */
-
-    $('.love, .pin, .archive, .delete').click(function() {
-
-        n = $(this).toggleClass('in');
-
-    });
-
-    $('.archive, .delete').click(function() {
-
-        n = $(this).parent().parent();
-        n.animate({'opacity': 0}, 1000);
-        setTimeout(function(){n.hide();}, 1000);
-
-    });
-
-    $('.love').click(function() {
-
-        $.ajax({
-
-            type: 'POST',
-
-            url: "{% url 'a:ln' %}",
-
-            data: {
-
-                'csrfmiddlewaretoken': '{{csrf_token}}',
-                'u': $(this).siblings('input').val(),
-
-            }
-
-        });
-
-    });
-
-    $('.pin').click(function() {
-
-        $.ajax({
-
-            type: 'POST',
-
-            url: "{% url 'a:pn' %}",
-
-            data: {
-
-                'csrfmiddlewaretoken': '{{csrf_token}}',
-                'u': $(this).siblings('input').val(),
-
-            }
-
-        });
-
-    });
-
-    $('.delete').click(function() {
-
-        $.ajax({
-
-            type: 'POST',
-
-            url: "{% url 'a:dn' %}",
-
-            data: {
-
-                'csrfmiddlewaretoken': '{{csrf_token}}',
-                'u': $(this).siblings('input').val(),
-
-            }
-
-        });
-
-    });
-
-    $('.archive').click(function() {
-
-        $.ajax({
-
-            type: 'POST',
-
-            url: "{% url 'a:an' %}",
-
-            data: {
-
-                'csrfmiddlewaretoken': '{{csrf_token}}',
-                'u': $(this).siblings('input').val(),
-
-            }
-
-        });
-
-    });
-
-
-    $('.note').mouseenter(function() {
-
-        $(this).children('.actions').css('opacity', 1);
-
-    });
-
-    $('.note').mouseleave(function() {
-
-        $(this).children('.actions').css('opacity', 0);
-
-    });
 
     $('.note').each(function() {
 

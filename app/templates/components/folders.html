@@ -1,6 +1,8 @@
 {% for folder in folders %}
 
-    <div class="page">
+    <div class="page"
+        hx-get="{% url 'a:f' folder.uid %}"
+        hx-target=".notes">
 
         <input type="text" id="uid" value="{{ folder.uid }}" hidden>
         
@@ -50,13 +52,21 @@
 
                 )
 
+                
+                $('.new-note-folder-list').append(
+
+                    `<div class='note-folder'><span>` + title + `</span></div>`
+                    
+                )
+
                 newNoteFolders.push(uid);
+                $('#folder-uids').val(newNoteFolders.join(' '));
+
+                found = true;
 
             }
 
         });
-
-        found = true;
 
     }
 

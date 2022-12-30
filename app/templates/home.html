@@ -157,7 +157,7 @@
 
                 <div class="wrapper" id="profile">
 
-                    <span>{{ profile.initials }}</span>
+                    <span>{{ p.initials }}</span>
 
                 </div>
 
@@ -212,11 +212,15 @@
 
         <div class="side-nav">
 
-            <div class="page"><div class="icon"><svg class="home" xmlns="http://www.w3.org/2000/svg" width="29.174" height="25.726" viewBox="0 0 29.174 25.726">
+            <div class="page in" hx-get="{% url 'a:all' %}" hx-target=".notes"><div class="icon"><svg class="home" xmlns="http://www.w3.org/2000/svg" width="29.174" height="25.726" viewBox="0 0 29.174 25.726">
                 <path id="Icon_material-home" data-name="Icon material-home" d="M14.192,28.373c1.755-2.106-1.4-6.319,0-8.426a3.286,3.286,0,0,1,5.617,0c1.4,2.106-1.755,6.319,0,8.426s5.266,2.809,7.022,0,0-11.234,0-11.234,6.67,3.16,4.213,0S24.023,4.5,17,4.5,5.416,13.979,2.958,17.139s4.213,0,4.213,0-1.755,8.426,0,11.234S12.437,30.48,14.192,28.373Z" transform="translate(-2.414 -4.5)"/>
             </svg></div><div class="page-title"><span>Дом</span></div></div>
 
-            <div class="page"><div class="icon"><svg class="l" xmlns="http://www.w3.org/2000/svg" width="24.806" height="21.933" viewBox="0 0 24.806 21.933">
+            <div class="page"
+                hx-get="{% url 'a:l' %}"
+                hx-target=".notes">
+                
+                <div class="icon"><svg class="l" xmlns="http://www.w3.org/2000/svg" width="24.806" height="21.933" viewBox="0 0 24.806 21.933">
                 <path id="Icon_awesome-heart" data-name="Icon awesome-heart" d="M22.4,3.747a6.576,6.576,0,0,0-9.04.666l-.954.994-.954-.994a6.576,6.576,0,0,0-9.04-.666,7.08,7.08,0,0,0-.48,10.178L11.3,23.707a1.508,1.508,0,0,0,2.195,0l9.375-9.781A7.076,7.076,0,0,0,22.4,3.747Z" transform="translate(0.001 -2.248)"/>
               </svg></div><div class="page-title"><span>Любимое</span></div></div>
 
@@ -228,14 +232,14 @@
 
             </div>
 
-            <div class="page"><div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="25.015" height="22.657" viewBox="0 0 25.015 22.657">
+            <div class="page" hx-post="{% url 'a:a' %}" hx-target=".notes"><div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="25.015" height="22.657" viewBox="0 0 25.015 22.657">
                 <g id="Icon_ionic-ios-archive" data-name="Icon ionic-ios-archive" transform="translate(-3.375 -4.5)">
                   <path id="Контур_1" data-name="Контур 1" d="M28.149,7.761H3.616a.238.238,0,0,1-.241-.233V6.363A1.892,1.892,0,0,1,5.3,4.5H26.465A1.892,1.892,0,0,1,28.39,6.363V7.528A.238.238,0,0,1,28.149,7.761Z"/>
                   <path id="Контур_2" data-name="Контур 2" d="M27.169,10.266H4.982a.476.476,0,0,0-.482.466V25.988a1.9,1.9,0,0,0,1.929,1.863H25.722a1.9,1.9,0,0,0,1.929-1.863V10.731A.476.476,0,0,0,27.169,10.266ZM19.09,18.534h-6a.856.856,0,0,1-.862-.716.826.826,0,0,1,.838-.914h6a.856.856,0,0,1,.862.716A.829.829,0,0,1,19.09,18.534Z" transform="translate(-0.193 -0.694)"/>
                 </g>
               </svg></div><div class="page-title"><span>Архив</span></div></div>
 
-            <div class="page" hx-post="{% url 'a:trash' %}" hx-target=".notes-wrapper"><div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18.008" height="24.68" viewBox="0 0 18.008 24.68">
+            <div class="page" hx-post="{% url 'a:t' %}" hx-target=".notes-wrapper"><div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18.008" height="24.68" viewBox="0 0 18.008 24.68">
                 <g id="Icon_ionic-ios-trash" data-name="Icon ionic-ios-trash" transform="translate(-8.297 -4.5)">
                   <path id="Контур_3" data-name="Контур 3" d="M9.359,9l1.525,20.44a1.981,1.981,0,0,0,1.894,2.06h9.114a1.981,1.981,0,0,0,1.894-2.06L25.292,9ZM13.34,27.633,12.907,11.25h1.2l.446,16.383Zm4.544,0H16.721V11.25h1.164Zm3.381,0h-1.2L20.5,11.25h1.2Z" transform="translate(0 -2.32)"/>
                   <path id="Контур_4" data-name="Контур 4" d="M24.347,6.469H22L20.283,4.852a1.269,1.269,0,0,0-.861-.352H15.193a1.288,1.288,0,0,0-.874.352L12.6,6.469H10.254A1.733,1.733,0,0,0,8.3,8.3H26.3A1.733,1.733,0,0,0,24.347,6.469Z"/>
@@ -249,10 +253,11 @@
 
               <form> 
 
-                <input type="text" name="cf" id='nnf' hidden />
+                <input type="text" name="cf" id='nnf' hidden /> <!-- Current folder -->
 
-                <input type="checkbox" name="p" id='nnp' hidden />
-                <input type="checkbox" name="l" id='nnl' hidden />
+                <input type="checkbox" name="p" id='nnp' hidden /> <!-- Pinned -->
+                <input type="checkbox" name="l" id='nnl' hidden /> <!-- Loved -->
+                <input type="checkbox" name="lp" id='lp' hidden /> <!-- Loved -->
 
                 <div class="nnw">
                 
@@ -269,7 +274,7 @@
 
                         </div>
 
-                        <input type="text" name="ti" class='title' id="nnt" placeholder="Я помню чудное мгновение...">
+                        <input type="text" name="ti" class='title' id="nnt" placeholder="Я помню чудное мгновение..."> <!-- Title -->
                         
                         <div class="right">
 
@@ -350,9 +355,13 @@
 
                                     <form>
 
-                                        <input type="text" name="ft" id="nft" />
+                                        <input type="text" name="t" id="nffst" hidden/>
         
-                                        <button id="create-folder-from-search-btn" hx-post="{% url 'a:create-folder' %}" hx-target=".folders" style="display: none;">Создать</button>
+                                        <button id="create-folder-from-search-btn" 
+                                            hx-post="{% url 'a:create-folder' %}" 
+                                            hx-target=".folders" 
+                                            style="display: none;">
+                                            Создать</button>
 
                                     </form>
 
@@ -363,14 +372,14 @@
 
                         <div class="content">
 
-                            <input type="text" name="c" id="nnc" hidden />
+                            <input type="text" name="c" id="nnc" hidden /> <!-- Content -->
                             <div contenteditable="true" class="new-note-content" placeholder="Я помню чудное мгновение..."></div>
 
                             <div class="new-note-folder-list"></div>
 
                         </div>
 
-                        <input type="text" name="fu" id="folder-uids" hidden/>
+                        <input type="text" name="fu" id="folder-uids" hidden/> <!-- Folder uids separated with space -->
                         
                         <button class="create-note-btn" 
                             hx-post="{% url 'a:create-note' %}" 
@@ -404,13 +413,17 @@
     <style>
 
         @font-face {
+
             font-family: Comfortaa;
             src: url("{% static 'fonts/Comfortaa.ttf' %}");
+        
         }
 
         @font-face {
+
             font-family: SG;
             src: url("{% static 'fonts/ShowcardGothic.otf' %}");
+        
         }
 
         
@@ -487,6 +500,216 @@
 
     <script>
 
+        /* Note actions */
+
+        $('body').on('mouseenter', '.note', function() {
+
+            $(this).children('.actions').css('opacity', 1);
+
+        });
+
+        $('body').on('mouseleave', '.note', function() {
+
+            $(this).children('.actions').css('opacity', 0);
+
+        });
+
+        $('body').on('click', '.love', function() {
+
+            $.ajax({
+
+                type: 'POST',
+
+                url: "{% url 'a:ln' %}",
+
+                data: {
+
+                    'csrfmiddlewaretoken': '{{csrf_token}}',
+                    'u': $(this).siblings('input').val(),
+
+                }
+
+            });
+
+        });
+
+        $('body').on('click', '.delete', function() {
+
+            $.ajax({
+
+                type: 'POST',
+
+                url: "{% url 'a:dn' %}",
+
+                data: {
+
+                    'csrfmiddlewaretoken': '{{csrf_token}}',
+                    'u': $(this).siblings('input').val(),
+
+                }
+
+            });
+
+        });
+
+        $('body').on('click', '.archive', function() {
+
+            $.ajax({
+
+                type: 'POST',
+
+                url: "{% url 'a:an' %}",
+
+                data: {
+
+                    'csrfmiddlewaretoken': '{{csrf_token}}',
+                    'u': $(this).siblings('input').val(),
+
+                }
+
+            });
+
+        });
+
+        pinnedSection = `
+
+            <span class="section-title" id='pinned-section'>Закрепленные заметки</span>
+            <div class="note-section" id="pinned-notes"></div>
+
+        `
+
+        otherSection = `
+
+            <span class="section-title" id='other-section'>Другие заметки</span>
+            <div class="note-section" id="other-notes"></div>
+
+        `
+
+        $('body').on('click', '.love, .pin, .archive, .delete', function() {
+
+            n = $(this).toggleClass('in');
+
+        });
+
+        $('body').on('click', '.archive, .delete', function() {
+
+            n = $(this).parent().parent();
+    
+            n.remove();
+
+            if ($('#other-notes').children().length === 0) {
+
+                $("#other-section").remove();
+                $("#other-notes").remove();
+
+            };
+
+            if ($('#pinned-notes').children().length === 0) {
+
+                $("#pinned-section").remove();
+                $("#pinned-notes").remove();
+
+            };
+
+        });
+
+        $('body').on('click', '.pin', function() {
+
+            if ($(this).hasClass('in')) {
+
+                if ($("#pinned-notes").length) {
+
+                    $(this).parent().parent().prependTo('#pinned-notes');
+
+                } else {
+
+                    $(pinnedSection).insertAfter('.current-page-title');
+                    $(this).parent().parent().prependTo('#pinned-notes');
+
+                }
+
+                if ($('#other-notes').children().length === 0) {
+
+                    $("#other-section").remove();
+                    $("#other-notes").remove();
+
+                }
+                      
+            } else {
+                
+                if ($("#other-notes").length) {
+
+                    $(this).parent().parent().prependTo('#other-notes');
+
+                } else {
+
+                    $('.notes').append(otherSection);
+                    $(this).parent().parent().prependTo('#other-notes');
+
+                }
+
+                if ($('#pinned-notes').children().length === 0) {
+
+                    $("#pinned-section").remove();
+                    $("#pinned-notes").remove();
+
+                }
+
+            }
+
+            $.ajax({
+
+                type: 'POST',
+
+                url: "{% url 'a:pn' %}",
+
+                data: {
+
+                    'csrfmiddlewaretoken': '{{csrf_token}}',
+                    'u': $(this).siblings('input').val(),
+
+                }
+
+            });
+
+        });
+
+        /* Note folder removal */
+
+        $('body').on('mouseenter', '.folder', function() {
+
+            $(this).children('#remove-folder').css('opacity', 1);
+
+        });
+
+        $('body').on('mouseleave', '.folder', function() {
+
+            $(this).children('#remove-folder').css('opacity', 0);
+
+        });
+
+        $('body').on('click', '#remove-folder', (function() {
+
+            $(this).parent().hide();
+
+            $.ajax({
+
+                type: 'POST',
+                
+                url: "{% url 'a:rf' %}",
+
+                data: {
+
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'f': $(this).siblings('#fu').val(),
+                    'n': $(this).siblings('#nu').val(),
+
+                }
+
+            })
+
+        }));
+
         /* Profile */
 
         var dd = false;
@@ -505,7 +728,7 @@
 
                     $('.profile-dropdown').css({'display': 'none'})
 
-                }, 1000)
+                }, 1000);
 
             } else {
 
@@ -520,8 +743,6 @@
 
             dd = !dd
 
-            
-
         });
 
 
@@ -529,7 +750,7 @@
 
         $('.mode').click(function () {
 
-            $('.toggle-checkbox').prop('checked', !$('.toggle-checkbox').prop('checked'))
+            $('.toggle-checkbox').prop('checked', !$('.toggle-checkbox').prop('checked'));
 
             $("body").toggleClass('light');
             $(".moon").toggleClass('sun');
@@ -562,15 +783,15 @@
 
         $('#create-folder-from-search-btn').click(function() {
 
-            alert($('#nft').val())
-
             found = false;
-            newTitle = $('#search-notepad').val();
+            newTitle = $('#nffst').val();
+
+            $(this).hide();
 
             $('#search-notepad').val('');
             $('#search-notepad').focus();
 
-        })
+        });
 
         var foldersOpen, folders, folderList;
 
@@ -690,11 +911,11 @@
 
         $('#search-notepad').keyup(function() {
 
-            $('#nft').val($(this).val())
+            $('#nffst').val($(this).val());
 
             $('.folder-list').children().each(function() {
 
-                if (!$(this).children('input').is(':checked')) {$(this).remove()}
+                if (!$(this).children('input').is(':checked')) {$(this).remove()};
 
             });
 
@@ -705,6 +926,35 @@
             if ($(this).val().trim().length === 0) {
 
                 $('#create-folder-from-search-btn').hide();
+
+                folders.each(function(i) {
+
+                    title = $(this).children('.page-title').children('.folder-title').text();
+
+                    uid = $(this).children('#uid').val();
+
+                    if (!newNoteFolders.includes(uid)) {
+
+                        $('.folder-list').append(
+
+                            `
+
+                                <div id='new-note-folder'>
+
+                                    <input type='text' value='` + uid + `' hidden />
+                                    <input type='checkbox' onChange="addFolder(this)" />
+                                    <span>` + title + ` </span>
+
+                                </div>
+
+                            `
+
+                        );
+
+                    }
+
+                });
+
                 
             } else {
 
@@ -712,7 +962,7 @@
 
                 folders.each(function(i) {
 
-                    title = $(this).children('.page-title').children('page-title').text();
+                    title = $(this).children('.page-title').children('.folder-title').text();
 
                     uid = $(this).children('#uid').val();
 
@@ -730,7 +980,7 @@
 
                                 `
 
-                                    <div>
+                                    <div id='new-note-folder'>
 
                                         <input type='text' value='` + uid + `' hidden />
                                         <input type='checkbox' onChange="addFolder(this)" />
@@ -839,6 +1089,8 @@
             $('.create-folder-form').css({'z-index': 10, 'display': 'flex'}); 
             $('.create-folder-form').animate({opacity: 1}, 500);
 
+            $('#nft').val('');
+
             $('#create-folder-btn').attr('disabled', true);
 
         });
@@ -880,6 +1132,17 @@
         });
 
         /* Sidenav */
+
+        $('.page').click(function() {
+
+            if ($(this).attr('id') != 'create-folder-init') {
+
+                $('.page').removeClass('in');
+                $(this).addClass('in');
+
+            }
+
+        });
 
         var ww;
         var sidenavOpen = false;
@@ -1088,7 +1351,7 @@
 
                 <li class='checkbox-item'>
 
-                    <input type="checkbox" id='f' onChange='cbID(this)'>
+                    <input type="checkbox" class='note-checkbox' id='f' onChange='cbID(this)'>
 
                 </li>
 
@@ -1098,7 +1361,7 @@
 
         function cbID(e) {
 
-            if (e.checked) {e.id = 't'} else {e.id = 'f'}
+            if (e.checked) {e.id = 't'} else {e.id = 'f'};
 
         }
 
@@ -1109,7 +1372,7 @@
 
             if (parentEl.className !== 'checkbox-item' && parentEl.tagName === 'LI') {
 
-                document.execCommand('insertHTML', false, "<input type='checkbox' />");
+                document.execCommand('insertHTML', false, "<input type='checkbox' class='note-checkbox' id='f' onChange='cbID(this)' />");
                 $('.new-note-content').focus();
 
             } else {
@@ -1121,19 +1384,6 @@
 
         });
 
-        $('input[type=checkbox]').change(function() {
-
-            if ($(this).prop('checked')) {
-
-                $(this).attr('id', 't');
-
-            } else {
-
-                $(this).attr('id', 'f')
-
-            }
-
-        })
 
         $(".new-note-content").on('keydown', function(e) {
 
@@ -1146,7 +1396,7 @@
                     
                     setTimeout(function () {
 
-                        document.execCommand('insertHTML', false, "<input type='checkbox' />");
+                        document.execCommand('insertHTML', false, "<input type='checkbox' class='note-checkbox' id='f' onChange='cbID(this)' />");
 
                     }, 1)
 
@@ -1155,6 +1405,8 @@
             }
 
         });
+
+        /* Erasor */
 
         $('#erase').click(function() {
 
